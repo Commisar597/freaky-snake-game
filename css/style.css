@@ -1,11 +1,11 @@
 :root {
-  --bg-layout-color: #0A0F24;
-  --bg-block-border-color: #14FFEC;
-  --bg-block-color: #0D7377;
-  --text-primary-color: #32E0C4;
-  --text-secondary-color: #57F2E8;
-  --text-highlighted-color: #FF2079;
-  --text-highlighted2-color: #F6E96B;
+  --bg-layout-color: #FFF6F8;
+  --bg-block-border-color: #ffdde5;
+  --bg-block-color: #ffbfcc;
+  --text-primary-color: #582B41;
+  --text-secondary-color: #7F4B61;
+  --text-highlighted-color: #E3006F;
+  --text-highlighted2-color: #FF78A7;
 }
 
 

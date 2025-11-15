@@ -76,7 +76,7 @@ h3 {
 background: white;
 }
 
-.cell:hover { /*Completely unneccesary, just looks cool, can safe delete later*/
+.cell:hover { /*Completely unneccesary, just looks cool, can safe delete later, you can see what */
     background: #af831b;
     cursor: pointer;
 }

@@ -2,6 +2,7 @@
 var bgColor = ["red", "green", "blue"];
 const grid = document.querySelector(".screen");
 const playbutton = document.getElementById("playbutton");
+var player_position = 120; //initial player position
 //loading the variable with the color in the local storage
 var savedColor = localStorage.getItem("bgColor");
 if (savedColor) {
@@ -28,12 +29,38 @@ document
     localStorage.setItem("bgColor", bgColor[2]);
   });
 
-function CreateGrid() {//Function to create the grid of 16x16 cells
-    grid.innerHTML = ''; // Clear existing cells
-    for (let i = 0; i < 256; i++) {
+function CreateGrid() {
+    grid.innerHTML = ""; // this just clears existing cells, may be redunant
+    cells = [];
+    for (let i = 0; i < 256; i++) {//Creates 256 divs for the grid, configure size in CSS .screen 
         const cell = document.createElement("div");
-        cell.className = 'cell';
+        cell.className = "cell";
         grid.appendChild(cell);
+        cells.push(cell);
+    }
+    cells[player_position].style.backgroundColor = "black"
+  }
+  function movePlayer(newPosition){
+    if(newPosition >= 0 && newPosition < 256){
+      cells[player_position].style.backgroundColor = "white"; //clears previous position
+      player_position = newPosition;
+      cells[newPosition].style.backgroundColor = "black"; //sets new position
     }
   }
-  playbutton.addEventListener("click", CreateGrid);
+  playbutton.addEventListener("click", CreateGrid); 
+  document.addEventListener("keydown", (event) => {
+    if (cells.length === 0) return; //ignore keypresses if grid not created
+    if(event.key === "w" || event.key === "W" || event.key === "ArrowUp"){
+      movePlayer(player_position - 16);
+    }
+    if(event.key === "s" || event.key === "S" || event.key === "ArrowDown"){
+      movePlayer(player_position + 16);
+    }
+    if(event.key === "a" || event.key === "A" || event.key === "ArrowLeft"){
+      movePlayer(player_position - 1);
+    } 
+    if(event.key === "d" || event.key === "D" || event.key === "ArrowRight"){
+      movePlayer(player_position + 1);
+    }
+  });
+

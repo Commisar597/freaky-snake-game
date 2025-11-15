@@ -1,6 +1,7 @@
-//initialize anarray with colors for setting the background color
+//initialize an array with colors for setting the background color
 var bgColor = ["red", "green", "blue"];
-
+const grid = document.querySelector(".screen");
+const playbutton = document.getElementById("playbutton");
 //loading the variable with the color in the local storage
 var savedColor = localStorage.getItem("bgColor");
 if (savedColor) {
@@ -27,4 +28,12 @@ document
     localStorage.setItem("bgColor", bgColor[2]);
   });
 
-
+function CreateGrid() {//Function to create the grid of 16x16 cells
+    grid.innerHTML = ''; // Clear existing cells
+    for (let i = 0; i < 256; i++) {
+        const cell = document.createElement("div");
+        cell.className = 'cell';
+        grid.appendChild(cell);
+    }
+  }
+  playbutton.addEventListener("click", CreateGrid);

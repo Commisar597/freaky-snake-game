@@ -1,5 +1,5 @@
 :root {
-  --bg-layout-color: #FFF6F8;
+  ---bg-layout-color: #FFF6F8;
   --bg-block-border-color: #ffdde5;
   --bg-block-color: #ffbfcc;
   --text-primary-color: #582B41;
@@ -52,6 +52,7 @@ h3 {
   border: 2px solid var(--bg-block-border-color);
   border-radius: 8px;
   width: 15%;
+  padding: 15px;
 }
 
 .main { /*Game block*/
@@ -60,7 +61,7 @@ h3 {
   background-color: var(--bg-block-color);
   border: 2px solid var(--bg-block-border-color);
   width: 640px;
-  height: auto;
+  height: auto; 
 }
 
 .topMain { /*Top part of the game block*/

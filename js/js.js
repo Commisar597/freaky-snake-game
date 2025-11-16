@@ -47,20 +47,47 @@ function CreateGrid() {
       cells[newPosition].style.backgroundColor = "black"; //sets new position
     }
   }
-  playbutton.addEventListener("click", CreateGrid); 
+  playbutton.addEventListener("click", CreateGrid);
   document.addEventListener("keydown", (event) => {
-    if (cells.length === 0) return; //ignore keypresses if grid not created
-    if(event.key === "w" || event.key === "W" || event.key === "ArrowUp"){
-      movePlayer(player_position - 16);
-    }
-    if(event.key === "s" || event.key === "S" || event.key === "ArrowDown"){
-      movePlayer(player_position + 16);
-    }
-    if(event.key === "a" || event.key === "A" || event.key === "ArrowLeft"){
-      movePlayer(player_position - 1);
-    } 
-    if(event.key === "d" || event.key === "D" || event.key === "ArrowRight"){
-      movePlayer(player_position + 1);
-    }
-  });
+  if (cells.length === 0) return; //ignore keypresses if grid not created
 
+  if (event.key === "w" || event.key === "W" || event.key === "ArrowUp") {
+    direction = "up";
+  }
+  if (event.key === "s" || event.key === "S" || event.key === "ArrowDown") {
+    direction = "down";
+  }
+  if (event.key === "a" || event.key === "A" || event.key === "ArrowLeft") {
+    direction = "left";
+  }
+  if (event.key === "d" || event.key === "D" || event.key === "ArrowRight") {
+    direction = "right";
+  }
+});
+
+let time = 0;
+let direction = "up";
+
+const timerEvents = new EventTarget;
+
+setInterval(() => {
+  time++;
+  timerEvents.dispatchEvent(new CustomEvent("tick", {
+    detail: { value: 1 }
+  }));
+}, 1000);
+
+timerEvents.addEventListener("tick", (event) => {
+  autoMoveSnake();
+})
+
+function autoMoveSnake() {
+  let newPos = player_position;
+
+  if (direction === "up") newPos -= 16;
+  if (direction === "down") newPos += 16;
+  if (direction === "left") newPos -= 1;
+  if (direction === "right") newPos += 1;
+
+  movePlayer(newPos);
+}

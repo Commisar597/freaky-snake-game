@@ -73,13 +73,8 @@ h3 {
   border-bottom: 2px solid var(--bg-block-border-color);
 }
 
-.cell {
+.cell { /*Grid cell attributes*/
 background: white;
-}
-
-.cell:hover { /*Completely unneccesary, just looks cool, can safe delete later, you can see what */
-    background: #af831b;
-    cursor: pointer;
 }
 
 .screen { /*Specifically the game screen, and 16x16 grid that it will play on*/

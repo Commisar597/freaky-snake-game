@@ -2,7 +2,7 @@
 var bgColor = ["red", "green", "blue"];
 const grid = document.querySelector(".screen");
 const playbutton = document.getElementById("playbutton");
-var player_positions = [120,136,152]; //initial player positions
+var player_positions = [120,136,152,168]; //initial player positions
 var direction = "up";
 //loading the variable with the color in the local storage
 var savedColor = localStorage.getItem("bgColor");
@@ -63,7 +63,7 @@ function CreateGrid() {
   function movePlayer(direction){
   let headPosition = player_positions[0]; // Gets head position
   let newHeadPosition;
-  // Calculates new head position based on direction GOD I FUCKING HATE THESE AI FUCKING AUTOCOMPLETE SUGGESTIONS ITS DOING IT NOW AS WELL FUCK
+  // Calculates new head position based on direction
   if (direction === "up"){newHeadPosition = headPosition - 16;};
   if (direction === "down"){newHeadPosition = headPosition + 16;};
   if (direction === "left"){newHeadPosition = headPosition - 1;};
@@ -71,8 +71,7 @@ function CreateGrid() {
 
   let tail = player_positions.pop(); // .pop removes the last element from the array, and returns it, so tail var is the removed element
   cells[tail].style.backgroundColor = "white"; // sets the tail white
-  player_positions.unshift(newHeadPosition);// .unshift adds an element to the start of the array, unlike push which adds to the end, cool ik
-  cells[newHeadPosition].style.backgroundColor = "black"; // sets the head black
+  player_positions.unshift(newHeadPosition);// .unshift adds an element to the start of the array, unlike push which adds to the end
 }
   document.addEventListener("keydown", (event) => { // function for the direction
   if (cells.length === 0) return; //ignore keypresses if grid not created

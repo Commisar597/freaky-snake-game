@@ -67,6 +67,9 @@ function CreateGrid() {
 
 let time = 0;
 let direction = "up";
+let speed = 500;
+let speedIncrease = 10;
+let minSpeed = 80;
 
 const timerEvents = new EventTarget;
 
@@ -84,10 +87,20 @@ timerEvents.addEventListener("tick", (event) => {
 function autoMoveSnake() {
   let newPos = player_position;
 
-  if (direction === "up") newPos -= 16;
-  if (direction === "down") newPos += 16;
+  if (direction === "up") newPos -= 1;
+  if (direction === "down") newPos += 1;
   if (direction === "left") newPos -= 1;
   if (direction === "right") newPos += 1;
 
   movePlayer(newPos);
+}
+
+function autoMoveLoop()
+{
+  autoMoveSnake();
+
+  speed -= speedIncrease;
+  if(speed < minSpeed) speed = minSpeed;
+
+  setTimeout(autoMoveLoop, spped);
 }

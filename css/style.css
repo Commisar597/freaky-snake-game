@@ -74,12 +74,8 @@ h3 {
 }
 
 .cell {
-background: white;
-}
-
-.cell:hover { /*Completely unneccesary, just looks cool, can safe delete later, you can see what */
-    background: #af831b;
-    cursor: pointer;
+  background: rgb(55, 137, 0);
+  border: 1px solid rgb(38, 95, 0)
 }
 
 .screen { /*Specifically the game screen, and 16x16 grid that it will play on*/

@@ -1,5 +1,6 @@
 :root {
-  ---bg-layout-color: #FFF6F8;
+  /* pink */
+  --bg-layout-color: #FFF6F8;
   --bg-block-border-color: #ffdde5;
   --bg-block-color: #ffbfcc;
   --text-primary-color: #582B41;
@@ -7,6 +8,7 @@
   --text-highlighted-color: #E3006F;
   --text-highlighted2-color: #FF78A7;
 }
+
 
 
 * {
@@ -74,9 +76,10 @@ h3 {
 }
 
 .cell {
-  background: rgb(55, 137, 0);
-  border: 1px solid rgb(38, 95, 0)
+  background: rgb(102, 145, 74);
+  border: 2px solid rgb(64, 98, 65);
 }
+
 
 .screen { /*Specifically the game screen, and 16x16 grid that it will play on*/
   display: grid;

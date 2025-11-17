@@ -3,10 +3,10 @@
   --bg-layout-color: #ffe4eaff;
   --bg-block-border-color: #ffdde5;
   --bg-block-color: #ffbfcc;
-  --text-primary-color: #582B41;
-  --text-secondary-color: #7F4B61;
-  --text-highlighted-color: #E3006F;
-  --text-highlighted2-color: #FF78A7;
+  --text-primary-color: #582b41;
+  --text-secondary-color: #7f4b61;
+  --text-highlighted-color: #e3006f;
+  --text-highlighted2-color: #ff78a7;
 }
 
 * {
@@ -17,7 +17,7 @@
 body {
   margin: 0;
   padding: 30px;
-  background-color: var(--bg-layout-color)
+  background-color: var(--bg-layout-color);
 }
 
 h2,
@@ -32,14 +32,16 @@ h3 {
   margin: 0;
 }
 
-.container { /*Global filter by page*/
+.container {
+  /*Global filter by page*/
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 40px;
 }
 
-.buildings { /*Container for specific 3 blocks*/
+.buildings {
+  /*Container for specific 3 blocks*/
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -47,7 +49,8 @@ h3 {
   margin-top: 40px;
 }
 
-.small { /*Settings block and leaderboard*/
+.small {
+  /*Settings block and leaderboard*/
   background-color: var(--bg-block-color);
   border: 2px solid var(--bg-block-border-color);
   border-radius: 8px;
@@ -55,16 +58,18 @@ h3 {
   padding: 15px;
 }
 
-.main { /*Game block*/
+.main {
+  /*Game block*/
   display: flex;
   flex-direction: column;
   background-color: var(--bg-block-color);
   border: 2px solid var(--bg-block-border-color);
   width: 640px;
-  height: auto; 
+  height: auto;
 }
 
-.topMain { /*Top part of the game block*/
+.topMain {
+  /*Top part of the game block*/
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -78,12 +83,23 @@ h3 {
   border: 2px solid rgb(64, 98, 65);
 }
 
-
-.screen { /*Specifically the game screen, and 16x16 grid that it will play on*/
+.screen {
+  /*Specifically the game screen, and 16x16 grid that it will play on*/
   display: grid;
-  grid-template-columns: repeat(16,40px);
-  grid-template-rows: repeat(16,40px);
+  grid-template-columns: repeat(16, 40px);
+  grid-template-rows: repeat(16, 40px);
   background: #ddd;
   width: auto;
-  height: auto; 
+  height: auto;
+  position: relative;
+}
+
+#fruitsId {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-color: red;
+  border-radius: 50%;
+  z-index: 10; /*over the cells of the grid*/
+  display: none;
 }

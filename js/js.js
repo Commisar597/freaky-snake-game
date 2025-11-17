@@ -10,7 +10,6 @@ var snakeBorderColors = ["rgba(114, 30, 30, 1)", "rgba(140, 165, 40, 1)", "rgba(
 var currentSnakeColor = "rgba(160, 41, 41, 1)"
 var currentSnakeBorderColor = "rgba(114, 30, 30, 1)"
 
-// Палетка A — Розовая |
 document.getElementById("pinkBG").addEventListener("click", function () {
   document.documentElement.style.setProperty('--bg-layout-color', '#ffe4eaff');
   document.documentElement.style.setProperty('--bg-block-border-color', '#ffdde5');
@@ -21,7 +20,6 @@ document.getElementById("pinkBG").addEventListener("click", function () {
   document.documentElement.style.setProperty('--text-highlighted2-color', '#FF78A7');
 });
 
-// Палетка B — Темно-синяя |
 document.getElementById("blueBG").addEventListener("click", function () {
   document.documentElement.style.setProperty('--bg-layout-color', '#0C1226');
   document.documentElement.style.setProperty('--bg-block-border-color', '#1B274A');
@@ -32,7 +30,6 @@ document.getElementById("blueBG").addEventListener("click", function () {
   document.documentElement.style.setProperty('--text-highlighted2-color', '#89A8FF');
 });
 
-// Палетка C — Приятная зелёная |
 document.getElementById("greenBG").addEventListener("click", function () {
   document.documentElement.style.setProperty('--bg-layout-color', '#dfffe7ff');
   document.documentElement.style.setProperty('--bg-block-border-color', '#C7EAD1');

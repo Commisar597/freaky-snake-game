@@ -9,8 +9,6 @@
   --text-highlighted2-color: #FF78A7;
 }
 
-
-
 * {
   box-sizing: border-box;
   color: var(--text-primary-color);

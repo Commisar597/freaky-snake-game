@@ -2,7 +2,7 @@
 var bgColor = ["#FFF6F8", "#0C1226", "#F3FFF6"];
 const grid = document.querySelector(".screen");
 const playbutton = document.getElementById("playbutton");
-var player_positions = [120, 136, 152, 168, 184]; //initial player positions
+var player_positions = [120, 136, 152, 168, 184];
 var direction = "up";
 //loading the variable with the color in the local storage
 var savedColor = localStorage.getItem("bgColor");
@@ -24,7 +24,6 @@ document.getElementById("pinkBG").addEventListener("click", function () {
   document.documentElement.style.setProperty('--text-secondary-color', '#7F4B61');
   document.documentElement.style.setProperty('--text-highlighted-color', '#E3006F');
   document.documentElement.style.setProperty('--text-highlighted2-color', '#FF78A7');
-  loc
 });
 
 // Палетка B — Темно-синяя |
@@ -101,25 +100,21 @@ function CreateGrid() {
 const timerEvents = new EventTarget;
 playbutton.addEventListener("click", CreateGrid);
 
-//Snakelike movement without growing just yet 
-function movePlayer(direction) {
-  let headPosition = player_positions[0]; // Gets head position
+  function movePlayer(direction){
+  let headPosition = player_positions[0];
   let newHeadPosition;
-  // Calculates new head position based on direction GOD I FUCKING HATE THESE AI FUCKING AUTOCOMPLETE SUGGESTIONS ITS DOING IT NOW AS WELL FUCK
-  if (direction === "up") { newHeadPosition = headPosition - 16; };
-  if (direction === "down") { newHeadPosition = headPosition + 16; };
-  if (direction === "left") { newHeadPosition = headPosition - 1; };
-  if (direction === "right") { newHeadPosition = headPosition + 1; };
+  if (direction === "up"){newHeadPosition = headPosition - 16;};
+  if (direction === "down"){newHeadPosition = headPosition + 16;};
+  if (direction === "left"){newHeadPosition = headPosition - 1;};
+  if (direction === "right"){newHeadPosition = headPosition + 1;};
 
   let tail = player_positions.pop(); // .pop removes the last element from the array, and returns it, so tail var is the removed element
-  cells[tail].style.backgroundColor = "";
-  cells[tail].style.border = "";
+  cells[tail].style.backgroundColor = "white"; // sets the tail white
   player_positions.unshift(newHeadPosition);// .unshift adds an element to the start of the array, unlike push which adds to the end, cool ik
-  cells[newHeadPosition].style.backgroundColor = currentSnakeColor;
-  cells[newHeadPosition].style.border = "2px solid " + currentSnakeBorderColor; // sets the head black
+  cells[newHeadPosition].style.backgroundColor = "black";
 }
-document.addEventListener("keydown", (event) => { // function for the direction
-  if (cells.length === 0) return; //ignore keypresses if grid not created
+  document.addEventListener("keydown", (event) => {
+  if (cells.length === 0) return;
 
   if (event.key === "w" || event.key === "W" || event.key === "ArrowUp") {
     direction = "up";
@@ -134,13 +129,14 @@ document.addEventListener("keydown", (event) => { // function for the direction
     direction = "right";
   }
 
-  function autoMoveLoop() {
-    autoMoveSnake();
+function autoMoveLoop()
+{
+  autoMoveSnake();
 
-    speed -= speedIncrease;
-    if (speed < minSpeed) speed = minSpeed;
+  speed -= speedIncrease;
+  if(speed < minSpeed) speed = minSpeed;
 
-    setTimeout(autoMoveLoop, speed);
-  }
+  setTimeout(autoMoveLoop, speed);
+}
 
 });

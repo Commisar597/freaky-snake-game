@@ -2,7 +2,7 @@
 var bgColor = ["red", "green", "blue"];
 const grid = document.querySelector(".screen");
 const playbutton = document.getElementById("playbutton");
-var player_positions = [120,136,152,168]; //initial player positions
+var player_positions = [104,120,136,152,168]; //initial player positions
 var direction = "up";
 //loading the variable with the color in the local storage
 var savedColor = localStorage.getItem("bgColor");
@@ -64,21 +64,49 @@ function CreateGrid() {
   const timerEvents = new EventTarget;
   playbutton.addEventListener("click", CreateGrid);
 
-  //Snakelike movement without growing just yet 
   function movePlayer(direction){
-  let headPosition = player_positions[0]; // Gets head position
+  let headPosition = player_positions[0]; // Gets  current head position
   let newHeadPosition;
+
   // Calculates new head position based on direction
   if (direction === "up"){newHeadPosition = headPosition - 16;};
   if (direction === "down"){newHeadPosition = headPosition + 16;};
   if (direction === "left"){newHeadPosition = headPosition - 1;};
   if (direction === "right"){newHeadPosition = headPosition + 1;};
 
-  let tail = player_positions.pop(); // .pop removes the last element from the array, and returns it, so tail var is the removed element
-  cells[tail].style.backgroundColor = "white"; // sets the tail white
-  player_positions.unshift(newHeadPosition);// .unshift adds an element to the start of the array, unlike push which adds to the end
+  //removes last element of the array(aka the tail) and makes the tail var the removed element
+  let tail = player_positions.pop();
+  cells[tail].style.backgroundColor = "white"; 
+
+  // adds element to the start of the array, 
+  player_positions.unshift(newHeadPosition);
+  cells[newHeadPosition].style.backgroundColor = "black"; 
+  }
+function autoMoveLoop()
+{
+  autoMoveSnake();
+
+  speed -= speedIncrease;
+  if(speed < minSpeed) speed = minSpeed;
+
+  setTimeout(autoMoveLoop, speed);
 }
-  document.addEventListener("keydown", (event) => { // function for the direction
+//call this function to grow the snake, it messes everything up if it goes into itself, 
+// so checking if the new headposition before moving to it is black, then it should stop or die or whatever
+function growPlayer(){
+  let tail = player_positions[0];
+  player_positions.unshift(tail);
+}
+// G for grow, for testing purposes
+document.addEventListener("keydown", (event)=> {
+if (event.key === "g")
+  {
+    growPlayer();
+  }
+
+});
+
+document.addEventListener("keydown", (event) => { // function for the direction
   if (cells.length === 0) return; //ignore keypresses if grid not created
 
   if (event.key === "w" || event.key === "W" || event.key === "ArrowUp") {
@@ -93,15 +121,4 @@ function CreateGrid() {
   if (event.key === "d" || event.key === "D" || event.key === "ArrowRight") {
     direction = "right";
   }
-
-function autoMoveLoop()
-{
-  autoMoveSnake();
-
-  speed -= speedIncrease;
-  if(speed < minSpeed) speed = minSpeed;
-
-  setTimeout(autoMoveLoop, speed);
-}
-
 });

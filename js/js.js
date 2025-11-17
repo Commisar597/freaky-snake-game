@@ -30,8 +30,13 @@ document
     localStorage.setItem("bgColor", bgColor[2]);
   });
 
+  let speed = 500;
+  let speedIncrease = 10;
+  let minSpeed = 80;
+
 function CreateGrid() {
   let time = 0;
+
   //I put the timer inside the button cuz it just keeps going up if its not, also would be preferable to stop the timer somehow H.N.  
   setInterval(() => {
   time++;
@@ -88,7 +93,15 @@ function CreateGrid() {
   if (event.key === "d" || event.key === "D" || event.key === "ArrowRight") {
     direction = "right";
   }
+
+function autoMoveLoop()
+{
+  autoMoveSnake();
+
+  speed -= speedIncrease;
+  if(speed < minSpeed) speed = minSpeed;
+
+  setTimeout(autoMoveLoop, speed);
+}
+
 });
-
-
-

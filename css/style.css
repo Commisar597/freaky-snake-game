@@ -73,8 +73,9 @@ h3 {
   border-bottom: 2px solid var(--bg-block-border-color);
 }
 
-.cell { /*Grid cell attributes*/
-background: white;
+.cell {
+  background: rgb(55, 137, 0);
+  border: 1px solid rgb(38, 95, 0)
 }
 
 .screen { /*Specifically the game screen, and 16x16 grid that it will play on*/

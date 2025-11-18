@@ -210,6 +210,7 @@ function movePlayer(direction) {
   //moves the fruit if the equality is true
   if (ateFruit) {
     moveFruit();
+    growPlayer();
   }
 
   let tail = player_positions.pop();
@@ -243,4 +244,9 @@ function autoMoveLoop() {
   if (speed < minSpeed) speed = minSpeed;
 
   setTimeout(autoMoveLoop, speed);
+}
+
+function growPlayer(){
+  let tail = player_positions[0];
+  player_positions.unshift(tail);
 }

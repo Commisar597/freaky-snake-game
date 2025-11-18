@@ -1,15 +1,35 @@
-//initialize an array with colors for setting the background color
-var bgColor = ["#ffe4eaff", "#0C1226", "#dfffe7ff"];
-
 const grid = document.querySelector(".screen");
 const playbutton = document.getElementById("playbutton");
 var player_positions = [120, 136, 152, 168, 184];
 var direction = "up";
 const fruit = document.getElementById("fruitsId");
 
-//loading the variable with the color in the local storage
-var savedColor = localStorage.getItem("bgColor");
-if (savedColor) document.body.style.backgroundColor = savedColor;
+let root = document.documentElement;
+
+//loading the variable with styles elements in local storage
+var savedBg = localStorage.getItem("bgColor");
+var savedBorder = localStorage.getItem("bgBlockBorderColor");
+var savedBlock = localStorage.getItem("bgBlockColor");
+var savedPrimary = localStorage.getItem("primaryColor");
+var savedSecondary = localStorage.getItem("secondaryColor");
+var savedHL = localStorage.getItem("highlightedColor");
+var savedHL2 = localStorage.getItem("highlighted2Color");
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  //The function works when the program starts thanks to the "DOMContentLoaded"
+  //event, changing the style to the one saved in local storage
+
+  if (localStorage.getItem("--bg-layout-color")) {
+    root.style.setProperty("--bg-layout-color", localStorage.getItem("--bg-layout-color"));
+    root.style.setProperty("--bg-block-border-color", localStorage.getItem("--bg-block-border-color"));
+    root.style.setProperty("--bg-block-color", localStorage.getItem("--bg-block-color"));
+    root.style.setProperty("--text-primary-color", localStorage.getItem("--text-primary-color"));
+    root.style.setProperty("--text-secondary-color", localStorage.getItem("--text-secondary-color"));
+    root.style.setProperty("--text-highlighted-color", localStorage.getItem("--text-highlighted-color"));
+    root.style.setProperty("--text-highlighted2-color", localStorage.getItem("--text-highlighted2-color"));
+  }
+});
 
 var snakeColors = [
   "rgba(160, 41, 41, 1)",
@@ -25,75 +45,58 @@ var currentSnakeColor = "rgba(160, 41, 41, 1)";
 var currentSnakeBorderColor = "rgba(114, 30, 30, 1)";
 
 document.getElementById("pinkBG").addEventListener("click", function () {
-  document.body.style.backgroundColor = bgColor[0];
-  localStorage.setItem("bgColor", "#ffe4eaff"); //saving the bg color in local storage
-  document.documentElement.style.setProperty(
-    "--bg-block-border-color",
-    "#ffdde5"
-  );
-  document.documentElement.style.setProperty("--bg-block-color", "#ffbfcc");
-  document.documentElement.style.setProperty("--text-primary-color", "#582B41");
-  document.documentElement.style.setProperty(
-    "--text-secondary-color",
-    "#7F4B61"
-  );
-  document.documentElement.style.setProperty(
-    "--text-highlighted-color",
-    "#E3006F"
-  );
-  document.documentElement.style.setProperty(
-    "--text-highlighted2-color",
-    "#FF78A7"
-  );
+
+  //A function that is activated when you click the style change button and changes
+  //  the data on the site and in local storage
+
+  root.style.setProperty("--bg-layout-color", "#ffe4ea");
+  localStorage.setItem("--bg-layout-color", "#ffe4ea");
+  root.style.setProperty("--bg-block-border-color", "#ffdde5");
+  localStorage.setItem("--bg-block-border-color", "#ffdde5");
+  root.style.setProperty("--bg-block-color", "#ffbfcc");
+  localStorage.setItem("--bg-block-color", "#ffbfcc");
+  root.style.setProperty("--text-primary-color", "#582b41");
+  localStorage.setItem("--text-primary-color", "#582b41");
+  root.style.setProperty("--text-secondary-color", "#7f4b61");
+  localStorage.setItem("--text-secondary-color", "#7f4b61");
+  root.style.setProperty("--text-highlighted-color", "#e3006f");
+  localStorage.setItem("--text-highlighted-color", "#e3006f");
+  root.style.setProperty("--text-highlighted2-color", "#ff78a7");
+  localStorage.setItem("--text-highlighted2-color", "#ff78a7");
 });
 
 document.getElementById("blueBG").addEventListener("click", function () {
-  document.body.style.backgroundColor = bgColor[1];
-  localStorage.setItem("bgColor", "#0C1226");
-  document.documentElement.style.setProperty(
-    "--bg-block-border-color",
-    "#1B274A"
-  );
-  document.documentElement.style.setProperty("--bg-block-color", "#1F315C");
-  document.documentElement.style.setProperty(
-    "--text-primary-color",
-    "#202430ff"
-  );
-  document.documentElement.style.setProperty(
-    "--text-secondary-color",
-    "#8FA2D0"
-  );
-  document.documentElement.style.setProperty(
-    "--text-highlighted-color",
-    "#5A8BFF"
-  );
-  document.documentElement.style.setProperty(
-    "--text-highlighted2-color",
-    "#89A8FF"
-  );
+  root.style.setProperty("--bg-layout-color", "#0C1226");
+  localStorage.setItem("--bg-layout-color", "#0C1226");
+  root.style.setProperty("--bg-block-border-color", "#1B274A");
+  localStorage.setItem("--bg-block-border-color", "#1B274A");
+  root.style.setProperty("--bg-block-color", "#1F315C");
+  localStorage.setItem("--bg-block-color", "#1F315C");
+  root.style.setProperty("--text-primary-color", "#202430");
+  localStorage.setItem("--text-primary-color", "#202430");
+  root.style.setProperty("--text-secondary-color", "#8FA2D0");
+  localStorage.setItem("--text-secondary-color", "#8FA2D0");
+  root.style.setProperty("--text-highlighted-color", "#5A8BFF");
+  localStorage.setItem("--text-highlighted-color", "#5A8BFF");
+  root.style.setProperty("--text-highlighted2-color", "#89A8FF");
+  localStorage.setItem("--text-highlighted2-color", "#89A8FF");
 });
 
 document.getElementById("greenBG").addEventListener("click", function () {
-  document.body.style.backgroundColor = bgColor[2];
-  localStorage.setItem("bgColor", "#dfffe7ff");
-  document.documentElement.style.setProperty(
-    "--bg-block-border-color",
-    "#C7EAD1"
-  );
-  document.documentElement.style.setProperty("--bg-block-color", "#AEECC0");
-  document.documentElement.style.setProperty("--text-primary-color", "#1F4B2E");
-  document.documentElement.style.setProperty(
-    "--text-secondary-color",
-    "#4E7257"
-  );
-  document.documentElement.style.setProperty(
-    "--text-highlighted-color",
-    "#27A05A"
-  );
-  document.documentElement.style.setProperty(
-    "--text-highlighted2-color",
-    "#57D98B"
-  );
+  root.style.setProperty("--bg-layout-color", "#dfffe7ff");
+  localStorage.setItem("--bg-layout-color", "#dfffe7ff");
+  root.style.setProperty("--bg-block-border-color", "#C7EAD1");
+  localStorage.setItem("--bg-block-border-color", "#C7EAD1");
+  root.style.setProperty("--bg-block-color", "#AEECC0");
+  localStorage.setItem("--bg-block-color", "#AEECC0");
+  root.style.setProperty("--text-primary-color", "#1F4B2E");
+  localStorage.setItem("--text-primary-color", "#1F4B2E");
+  root.style.setProperty("--text-secondary-color", "#4E7257");
+  localStorage.setItem("--text-secondary-color", "#4E7257");
+  root.style.setProperty("--text-highlighted-color", "#27A05A");
+  localStorage.setItem("--text-highlighted-color", "#27A05A");
+  root.style.setProperty("--text-highlighted2-color", "#57D98B");
+  localStorage.setItem("--text-highlighted2-color", "#57D98B");
 });
 
 document

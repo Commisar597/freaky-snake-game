@@ -1,0 +1,14 @@
+#HTML - The template was made by Artem. Contents done by Sofia, minor editing
+       for further assignments by Nandi and Artem.
+
+#CSS - Made by Artem, and supplemented by Nandi
+
+#JS:
+
+    -   Main logic   -      Was made by Nandi and Artem
+
+    -   Color system       -       Was made by Artem
+
+    -   Timer       -     Was made by Sofia
+
+    -   Points and Fruits       -      Was made by Sofia

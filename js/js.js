@@ -3,6 +3,8 @@ const playbutton = document.getElementById("playbutton");
 var player_positions = [120, 136, 152, 168, 184];
 var direction = "up";
 const fruit = document.getElementById("fruitsId");
+const pointsDisplay = document.getElementById("points");
+const timerDisplay = document.getElementById("timer");
 
 let root = document.documentElement;
 
@@ -16,18 +18,38 @@ var savedHL = localStorage.getItem("highlightedColor");
 var savedHL2 = localStorage.getItem("highlighted2Color");
 
 document.addEventListener("DOMContentLoaded", function () {
-
   //The function works when the program starts thanks to the "DOMContentLoaded"
   //event, changing the style to the one saved in local storage
 
   if (localStorage.getItem("--bg-layout-color")) {
-    root.style.setProperty("--bg-layout-color", localStorage.getItem("--bg-layout-color"));
-    root.style.setProperty("--bg-block-border-color", localStorage.getItem("--bg-block-border-color"));
-    root.style.setProperty("--bg-block-color", localStorage.getItem("--bg-block-color"));
-    root.style.setProperty("--text-primary-color", localStorage.getItem("--text-primary-color"));
-    root.style.setProperty("--text-secondary-color", localStorage.getItem("--text-secondary-color"));
-    root.style.setProperty("--text-highlighted-color", localStorage.getItem("--text-highlighted-color"));
-    root.style.setProperty("--text-highlighted2-color", localStorage.getItem("--text-highlighted2-color"));
+    root.style.setProperty(
+      "--bg-layout-color",
+      localStorage.getItem("--bg-layout-color")
+    );
+    root.style.setProperty(
+      "--bg-block-border-color",
+      localStorage.getItem("--bg-block-border-color")
+    );
+    root.style.setProperty(
+      "--bg-block-color",
+      localStorage.getItem("--bg-block-color")
+    );
+    root.style.setProperty(
+      "--text-primary-color",
+      localStorage.getItem("--text-primary-color")
+    );
+    root.style.setProperty(
+      "--text-secondary-color",
+      localStorage.getItem("--text-secondary-color")
+    );
+    root.style.setProperty(
+      "--text-highlighted-color",
+      localStorage.getItem("--text-highlighted-color")
+    );
+    root.style.setProperty(
+      "--text-highlighted2-color",
+      localStorage.getItem("--text-highlighted2-color")
+    );
   }
 });
 
@@ -45,7 +67,6 @@ var currentSnakeColor = "rgba(160, 41, 41, 1)";
 var currentSnakeBorderColor = "rgba(114, 30, 30, 1)";
 
 document.getElementById("pinkBG").addEventListener("click", function () {
-
   //A function that is activated when you click the style change button and changes
   //  the data on the site and in local storage
 
@@ -123,6 +144,10 @@ document
 let speed = 500;
 let speedIncrease = 10;
 let minSpeed = 80;
+let score = 0; //counter
+let timeInterval; //controls the clock display
+let seconds = 30; //starting seconds
+let minutes = 1; //starting minutes
 
 //hiding the fruit object
 if (fruit) {
@@ -144,7 +169,13 @@ function CreateGrid() {
 
   grid.innerHTML = ""; // this just clears existing cells
   cells = [];
+  score = 0; //resetting the score
+  pointsDisplay.textContent = "Point number: 0"; //update the element text
   grid.appendChild(fruit); //showing the fruit object
+  //initializing count down initial values and setting the initial display
+  seconds = 30;
+  minutes = 1;
+  timerDisplay.textContent = "1:30";
   for (let i = 0; i < 256; i++) {
     //Creates 256 divs for the grid, configure size in CSS .screen
     const cell = document.createElement("div");
@@ -160,7 +191,46 @@ function CreateGrid() {
     movePlayer(direction);
   });
 
-  moveFruit();
+  gameLoop = setInterval(() => {
+    movePlayer(direction);
+  }, speed); //gameloop updates and renders the game every frame
+
+  timerInterval = setInterval(updateTimer, 1000); //starting the countdown for the timer (every 1 second (1000 ms))
+
+  moveFruit(); //initial fruit placement
+}
+
+function updateTimer() {
+  //checking if the time already ran out
+  if (minutes === 0 && seconds === 0) {
+    gameOver(); //time stops, game over
+    return; //stopping the execution
+  }
+
+  //logic for seconds and minutes. when seconds hit 0, starts the decrement for minutes
+  if (seconds > 0) {
+    seconds--;
+  } else if (minutes > 0) {
+    minutes--;
+    seconds = 59;
+  }
+
+  //updating the display
+  let formattedSeconds;
+  //formatting so that it will always have 2 digits
+  if (seconds < 10) {
+    formattedSeconds = "0" + seconds;
+  } else {
+    formattedSeconds = seconds;
+  }
+  timerDisplay.textContent = minutes + ":" + formattedSeconds;
+}
+
+function gameOver() {
+  if (gameLoop) clearInterval(gameLoop); //stops the game
+  if (timerInterval) clearInterval(timerInterval); //stops the countdown
+
+  alert(`Game Over! Your score: ${score}`);
 }
 
 //random fruits
@@ -204,22 +274,25 @@ function movePlayer(direction) {
   if (direction === "right") {
     newHeadPosition = headPosition + 1;
   }
-
   const ateFruit = newHeadPosition === fruitPosition; //checks the equality of the snake head and the fruit cell
 
   //moves the fruit if the equality is true
   if (ateFruit) {
-    moveFruit();
+    score++; //increase the score
+    pointsDisplay.textContent = "Point number: " + score; //updates the element text
+    moveFruit(); //place a new fruit
     growPlayer();
+  } else {
+    //no collision, the snakes moves normally
+    let tail = player_positions.pop();
+    cells[tail].style.backgroundColor = "rgb(102, 145, 74)";
+    cells[tail].style.border = "2px solid rgb(64, 98, 65)";
+    player_positions.unshift(newHeadPosition);
   }
-
-  let tail = player_positions.pop();
-  cells[tail].style.backgroundColor = "rgb(102, 145, 74)";
-  cells[tail].style.border = "2px solid rgb(64, 98, 65)";
-  player_positions.unshift(newHeadPosition);
   cells[newHeadPosition].style.backgroundColor = currentSnakeColor;
   cells[newHeadPosition].style.border = "2px solid " + currentSnakeBorderColor;
 }
+
 document.addEventListener("keydown", (event) => {
   if (cells.length === 0) return;
 
@@ -246,7 +319,7 @@ function autoMoveLoop() {
   setTimeout(autoMoveLoop, speed);
 }
 
-function growPlayer(){
+function growPlayer() {
   let tail = player_positions[0];
   player_positions.unshift(tail);
 }

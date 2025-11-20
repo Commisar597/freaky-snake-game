@@ -132,7 +132,7 @@ if (fruit) {
 function CreateGrid() {
   let time = 0;
 
-  //I put the timer inside the button cuz it just keeps going up if its not, also would be preferable to stop the timer somehow H.N.
+  //I put the movement timer inside the button cuz it just keeps going up if its not, also would be preferable to stop the timer somehow H.N.
   setInterval(() => {
     time++;
     timerEvents.dispatchEvent(
@@ -142,7 +142,7 @@ function CreateGrid() {
     );
   }, 120); //Higher value = slower snake, I think this speed is good H.N.
 
-  grid.innerHTML = ""; // this just clears existing cells, may be redunant
+  grid.innerHTML = ""; // this just clears existing cells
   cells = [];
   grid.appendChild(fruit); //showing the fruit object
   for (let i = 0; i < 256; i++) {
@@ -166,7 +166,7 @@ function CreateGrid() {
 //random fruits
 function moveFruit() {
   const availableCells = []; //an array for available cells
-  //loop to found the cells that are not part of the snake
+  //loop to find the cells that are not part of the snake
   for (let i = 0; i < cells.length; i++) {
     if (!player_positions.includes(i)) {
       availableCells.push(i);

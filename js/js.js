@@ -8,6 +8,17 @@ const timerDisplay = document.getElementById("timer");
 
 let root = document.documentElement;
 
+var savedScore = localStorage.getItem("bestScore");
+const BestScore = document.getElementById("bestScore");
+BestScore.textContent = savedScore;
+
+document.addEventListener("beforeunload", function () {
+  if(score > savedScore)
+  {
+    savedScore = score;
+  }
+})
+
 //loading the variable with styles elements in local storage
 var savedBg = localStorage.getItem("bgColor");
 var savedBorder = localStorage.getItem("bgBlockBorderColor");

@@ -10,14 +10,14 @@ let root = document.documentElement;
 
 var savedScore = localStorage.getItem("bestScore");
 const BestScore = document.getElementById("bestScore");
-BestScore.textContent = savedScore;
+BestScore.textContent = savedScore
 
-document.addEventListener("beforeunload", function () {
-  if(score > savedScore)
-  {
-    savedScore = score;
+function saveBestScore() {
+  let savedScore = localStorage.getItem("bestScore") || 0;
+  if(score > savedScore){
+    localStorage.setItem("bestScore", score);
   }
-})
+}
 
 //loading the variable with styles elements in local storage
 var savedBg = localStorage.getItem("bgColor");
@@ -240,7 +240,8 @@ function updateTimer() {
 function gameOver() {
   if (gameLoop) clearInterval(gameLoop); //stops the game
   if (timerInterval) clearInterval(timerInterval); //stops the countdown
-
+  saveBestScore();
+  BestScore.textContent = localStorage.getItem("bestScore");
   alert(`Game Over! Your score: ${score}`);
 }
 

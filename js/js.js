@@ -8,13 +8,13 @@ const timerDisplay = document.getElementById("timer");
 
 let root = document.documentElement;
 
-var savedScore = localStorage.getItem("bestScore");
+var savedScore = parseInt(localStorage.getItem("bestScore")) || 0;
 const BestScore = document.getElementById("bestScore");
-BestScore.textContent = savedScore
+BestScore.textContent = savedScore;
 
 function saveBestScore() {
   let savedScore = localStorage.getItem("bestScore") || 0;
-  if(score > savedScore){
+  if (score > savedScore) {
     localStorage.setItem("bestScore", score);
   }
 }
@@ -31,6 +31,8 @@ var savedHL2 = localStorage.getItem("highlighted2Color");
 document.addEventListener("DOMContentLoaded", function () {
   //The function works when the program starts thanks to the "DOMContentLoaded"
   //event, changing the style to the one saved in local storage
+
+  BestScore.textContent = parseInt(localStorage.getItem("bestScore")) || 0;
 
   if (localStorage.getItem("--bg-layout-color")) {
     root.style.setProperty(
@@ -241,7 +243,7 @@ function gameOver() {
   if (gameLoop) clearInterval(gameLoop); //stops the game
   if (timerInterval) clearInterval(timerInterval); //stops the countdown
   saveBestScore();
-  BestScore.textContent = localStorage.getItem("bestScore");
+  BestScore.textContent = parseInt(localStorage.getItem("bestScore")) || 0;
   alert(`Game Over! Your score: ${score}`);
 }
 

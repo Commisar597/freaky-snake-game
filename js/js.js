@@ -10,7 +10,7 @@ let root = document.documentElement;
 
 var savedScore = parseInt(localStorage.getItem("bestScore")) || 0;
 const BestScore = document.getElementById("bestScore");
-BestScore.textContent = savedScore;
+BestScore.textContent = parseInt(localStorage.getItem("bestScore")) || 0;
 
 function saveBestScore() {
   let savedScore = localStorage.getItem("bestScore") || 0;
@@ -31,8 +31,6 @@ var savedHL2 = localStorage.getItem("highlighted2Color");
 document.addEventListener("DOMContentLoaded", function () {
   //The function works when the program starts thanks to the "DOMContentLoaded"
   //event, changing the style to the one saved in local storage
-
-  BestScore.textContent = parseInt(localStorage.getItem("bestScore")) || 0;
 
   if (localStorage.getItem("--bg-layout-color")) {
     root.style.setProperty(
@@ -243,8 +241,15 @@ function gameOver() {
   if (gameLoop) clearInterval(gameLoop); //stops the game
   if (timerInterval) clearInterval(timerInterval); //stops the countdown
   saveBestScore();
-  BestScore.textContent = parseInt(localStorage.getItem("bestScore")) || 0;
   alert(`Game Over! Your score: ${score}`);
+}
+
+function saveBestScore() {
+  let savedScore = parseInt(localStorage.getItem("bestScore")) || 0;
+  if (score > savedScore) {
+    localStorage.setItem("bestScore", score);
+    BestScore.textContent = score; // <- сразу обновляем отображение
+  }
 }
 
 //random fruits

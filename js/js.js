@@ -152,6 +152,10 @@ document
     currentSnakeColor = snakeColors[2];
   });
 
+window.addEventListener("beforeunload", function () {
+  saveBestScore();
+});
+
 let speed = 500;
 let speedIncrease = 10;
 let minSpeed = 80;
@@ -214,7 +218,8 @@ function CreateGrid() {
 function updateTimer() {
   //checking if the time already ran out
   if (minutes === 0 && seconds === 0) {
-    gameOver(); //time stops, game over
+    gameOver();
+    saveBestScore();
     return; //stopping the execution
   }
 

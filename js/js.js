@@ -1,11 +1,11 @@
 const grid = document.querySelector(".screen");
 const playbutton = document.getElementById("playbutton");
-var player_positions = [120, 136, 152, 168, 184];
-var direction = "up";
+let player_positions = [120, 136];
 const fruit = document.getElementById("fruitsId");
 const pointsDisplay = document.getElementById("points");
 const timerDisplay = document.getElementById("timer");
-
+const row = 1;
+const collumn = 16;
 let root = document.documentElement;
 
 var savedScore = parseInt(localStorage.getItem("bestScore")) || 0;
@@ -156,31 +156,44 @@ window.addEventListener("beforeunload", function () {
   saveBestScore();
 });
 
-let speed = 500;
+var direction = "up";
+let speed = 150;
 let speedIncrease = 10;
 let minSpeed = 80;
 let score = 0; //counter
 let timeInterval; //controls the clock display
 let seconds = 30; //starting seconds
 let minutes = 1; //starting minutes
+const timerEvents = new EventTarget();
+let movementTick = null;
 
 //hiding the fruit object
+//What is this? H.N
+
 if (fruit) {
   fruit.style.display = "none";
 }
 
 function CreateGrid() {
-  let time = 0;
 
-  //I put the movement timer inside the button cuz it just keeps going up if its not, also would be preferable to stop the timer somehow H.N.
-  setInterval(() => {
-    time++;
+    if (movementTick) {
+    clearInterval(movementTick);
+    clearInterval(timerInterval)
+    player_positions.forEach(()=>{
+    player_positions.pop})
+
+    player_positions = [120, 136];
+  }
+
+
+  //I put the movement timer inside the button so it doesn't tick up before pressing play H.N.
+  movementTick = setInterval(() => {
     timerEvents.dispatchEvent(
       new CustomEvent("tick", {
         detail: { value: 1 },
       })
     );
-  }, 120); //Higher value = slower snake, I think this speed is good H.N.
+  },speed );
 
   grid.innerHTML = ""; // this just clears existing cells
   cells = [];
@@ -190,37 +203,40 @@ function CreateGrid() {
   //initializing count down initial values and setting the initial display
   seconds = 30;
   minutes = 1;
-  timerDisplay.textContent = "1:30";
-  for (let i = 0; i < 256; i++) {
-    //Creates 256 divs for the grid, configure size in CSS .screen
+  timerDisplay.textContent = minutes+":"+seconds;
+  for (let i = 0; i < 256; i++) { 
     const cell = document.createElement("div");
     cell.className = "cell";
-    grid.appendChild(cell); // put the cells as the childs of the grid
-    cells.push(cell); // and in the array as elements
+    grid.appendChild(cell);
+    cells.push(cell);
   }
   player_positions.forEach((pos) => {
     cells[pos].style.backgroundColor = currentSnakeColor;
     cells[pos].style.border = "2px solid " + currentSnakeBorderColor;
   });
-  timerEvents.addEventListener("tick", (event) => {
-    movePlayer(direction);
-  });
-
-  gameLoop = setInterval(() => {
-    movePlayer(direction);
-  }, speed); //gameloop updates and renders the game every frame
-
+  
+  moveFruit(); //initial fruit placement
   timerInterval = setInterval(updateTimer, 1000); //starting the countdown for the timer (every 1 second (1000 ms))
 
-  moveFruit(); //initial fruit placement
+  //Same as previous eventlistener "gameloop", I switched it to use Artem's already existing one
 }
+
+  timerEvents.addEventListener("tick", () => 
+    {
+  movePlayer(direction);
+    })
 
 function updateTimer() {
   //checking if the time already ran out
   if (minutes === 0 && seconds === 0) {
-    gameOver();
+    clearInterval(timerInterval); //stops the countdown
+    clearInterval(movementTick); //stops the game
     saveBestScore();
-    return; //stopping the execution
+    alert(`Game Over! Your score: ${score}`);
+    player_positions.forEach(()=>{
+      player_positions.pop})
+    player_positions = [120, 184];
+    //After alert it stops the execution
   }
 
   //logic for seconds and minutes. when seconds hit 0, starts the decrement for minutes
@@ -240,13 +256,6 @@ function updateTimer() {
     formattedSeconds = seconds;
   }
   timerDisplay.textContent = minutes + ":" + formattedSeconds;
-}
-
-function gameOver() {
-  if (gameLoop) clearInterval(gameLoop); //stops the game
-  if (timerInterval) clearInterval(timerInterval); //stops the countdown
-  saveBestScore();
-  alert(`Game Over! Your score: ${score}`);
 }
 
 function saveBestScore() {
@@ -280,23 +289,22 @@ function moveFruit() {
   }
 }
 
-const timerEvents = new EventTarget();
 playbutton.addEventListener("click", CreateGrid);
 
 function movePlayer(direction) {
   let headPosition = player_positions[0];
   let newHeadPosition;
   if (direction === "up") {
-    newHeadPosition = headPosition - 16;
+    newHeadPosition = headPosition - collumn;
   }
   if (direction === "down") {
-    newHeadPosition = headPosition + 16;
+    newHeadPosition = headPosition + collumn;
   }
   if (direction === "left") {
-    newHeadPosition = headPosition - 1;
+    newHeadPosition = headPosition - row;
   }
   if (direction === "right") {
-    newHeadPosition = headPosition + 1;
+    newHeadPosition = headPosition + row;
   }
   const ateFruit = newHeadPosition === fruitPosition; //checks the equality of the snake head and the fruit cell
 
@@ -333,7 +341,7 @@ document.addEventListener("keydown", (event) => {
     direction = "right";
   }
 });
-
+//this function is not used anywhere Artem, how do we use this? H.N
 function autoMoveLoop() {
   autoMoveSnake();
 

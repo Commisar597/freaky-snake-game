@@ -338,3 +338,4 @@ function growPlayer() {
   let tail = player_positions[0];
   player_positions.unshift(tail);
 }
+

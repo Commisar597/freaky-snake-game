@@ -218,13 +218,22 @@ function CreateGrid() {
   moveFruit(); //initial fruit placement
   timerInterval = setInterval(updateTimer, 1000); //starting the countdown for the timer (every 1 second (1000 ms))
 
-  //Same as previous eventlistener "gameloop", I switched it to use Artem's already existing one
-}
+  moveFruit(); //initial fruit placement
 
-  timerEvents.addEventListener("tick", () => 
-    {
-  movePlayer(direction);
-    })
+  for (let i = 0; i < 16; i++){
+      cells[i].style.backgroundColor = "black"
+    }
+  for (let i = 16; i < 240; i+=16){
+      cells[i].style.backgroundColor = "black"
+    }
+  for (let i = 240; i < 256; i++){
+      cells[i].style.backgroundColor = "black"
+    }
+  for (let i = 31; i < 255; i+=16){
+      cells[i].style.backgroundColor = "black"
+    }
+  
+}
 
 function updateTimer() {
   //checking if the time already ran out

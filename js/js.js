@@ -185,8 +185,6 @@ function CreateGrid() {
     player_positions = [120, 136];
   }
 
-
-  //I put the movement timer inside the button so it doesn't tick up before pressing play H.N.
   movementTick = setInterval(() => {
     timerEvents.dispatchEvent(
       new CustomEvent("tick", {
@@ -195,7 +193,7 @@ function CreateGrid() {
     );
   },speed );
 
-  grid.innerHTML = ""; // this just clears existing cells
+  grid.innerHTML = ""; 
   cells = [];
   score = 0; //resetting the score
   pointsDisplay.textContent = "Point number: 0"; //update the element text
@@ -214,12 +212,12 @@ function CreateGrid() {
     cells[pos].style.backgroundColor = currentSnakeColor;
     cells[pos].style.border = "2px solid " + currentSnakeBorderColor;
   });
-  
+  createBorder();
   moveFruit(); //initial fruit placement
   timerInterval = setInterval(updateTimer, 1000); //starting the countdown for the timer (every 1 second (1000 ms))
 
-  moveFruit(); //initial fruit placement
-
+}
+  function createBorder() {
   for (let i = 0; i < 16; i++){
       cells[i].style.backgroundColor = "black"
     }
@@ -232,8 +230,12 @@ function CreateGrid() {
   for (let i = 31; i < 255; i+=16){
       cells[i].style.backgroundColor = "black"
     }
-  
-}
+  }
+
+timerEvents.addEventListener("tick", () => 
+  {
+  movePlayer(direction);
+  })
 
 function updateTimer() {
   //checking if the time already ran out
@@ -278,9 +280,9 @@ function saveBestScore() {
 //random fruits
 function moveFruit() {
   const availableCells = []; //an array for available cells
-  //loop to find the cells that are not part of the snake
+  //loop to find the cells that are not part of the snake or the border
   for (let i = 0; i < cells.length; i++) {
-    if (!player_positions.includes(i)) {
+    if (!player_positions.includes(i) && cells[i].style.backgroundColor !== "black") {
       availableCells.push(i);
     }
   }
@@ -315,14 +317,18 @@ function movePlayer(direction) {
   if (direction === "right") {
     newHeadPosition = headPosition + row;
   }
-  const ateFruit = newHeadPosition === fruitPosition; //checks the equality of the snake head and the fruit cell
-
+  if(cells[newHeadPosition].style.backgroundColor === "black" || player_positions.includes(newHeadPosition)){
+    clearInterval(movementTick);
+    clearInterval(timerInterval);
+    saveBestScore();
+    alert(`Game Over! Your score: ${score}`);
+  }
   //moves the fruit if the equality is true
-  if (ateFruit) {
+  if (newHeadPosition === fruitPosition) {
     score++; //increase the score
     pointsDisplay.textContent = "Point number: " + score; //updates the element text
-    moveFruit(); //place a new fruit
     growPlayer();
+    moveFruit(); //place a new fruits
   } else {
     //no collision, the snakes moves normally
     let tail = player_positions.pop();
@@ -337,16 +343,16 @@ function movePlayer(direction) {
 document.addEventListener("keydown", (event) => {
   if (cells.length === 0) return;
 
-  if (event.key === "w" || event.key === "W" || event.key === "ArrowUp") {
+  if (event.key === "w" || event.key === "W" || event.key === "ArrowUp" && direction !== "down") {
     direction = "up";
   }
-  if (event.key === "s" || event.key === "S" || event.key === "ArrowDown") {
+  if (event.key === "s" || event.key === "S" || event.key === "ArrowDown" && direction !== "up") {
     direction = "down";
   }
-  if (event.key === "a" || event.key === "A" || event.key === "ArrowLeft") {
+  if (event.key === "a" || event.key === "A" || event.key === "ArrowLeft" && direction !== "right") {
     direction = "left";
   }
-  if (event.key === "d" || event.key === "D" || event.key === "ArrowRight") {
+  if (event.key === "d" || event.key === "D" || event.key === "ArrowRight" && direction !== "left") {
     direction = "right";
   }
 });

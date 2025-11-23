@@ -304,6 +304,12 @@ playbutton.addEventListener("click", CreateGrid);
 
 function movePlayer(direction) {
   let headPosition = player_positions[0];
+    if (headPosition === fruitPosition) {
+    score++; //increase the score
+    pointsDisplay.textContent = "Point number: " + score; //updates the element text
+    growPlayer();
+    moveFruit(); //place a new fruits
+  }
   let newHeadPosition;
   if (direction === "up") {
     newHeadPosition = headPosition - collumn;
@@ -324,18 +330,13 @@ function movePlayer(direction) {
     alert(`Game Over! Your score: ${score}`);
   }
   //moves the fruit if the equality is true
-  if (newHeadPosition === fruitPosition) {
-    score++; //increase the score
-    pointsDisplay.textContent = "Point number: " + score; //updates the element text
-    growPlayer();
-    moveFruit(); //place a new fruits
-  } else {
+
     //no collision, the snakes moves normally
     let tail = player_positions.pop();
     cells[tail].style.backgroundColor = "rgb(102, 145, 74)";
     cells[tail].style.border = "2px solid rgb(64, 98, 65)";
     player_positions.unshift(newHeadPosition);
-  }
+  
   cells[newHeadPosition].style.backgroundColor = currentSnakeColor;
   cells[newHeadPosition].style.border = "2px solid " + currentSnakeBorderColor;
 }

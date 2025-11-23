@@ -141,7 +141,7 @@ document
     currentSnakeColor = snakeColors[2];
   });
 
-let speed = 500;
+let speed = 500; 
 let speedIncrease = 10;
 let minSpeed = 80;
 let score = 0; //counter
@@ -198,6 +198,20 @@ function CreateGrid() {
   timerInterval = setInterval(updateTimer, 1000); //starting the countdown for the timer (every 1 second (1000 ms))
 
   moveFruit(); //initial fruit placement
+
+  for (let i = 0; i < 16; i++){
+      cells[i].style.backgroundColor = "black"
+    }
+  for (let i = 16; i < 240; i+=16){
+      cells[i].style.backgroundColor = "black"
+    }
+  for (let i = 240; i < 256; i++){
+      cells[i].style.backgroundColor = "black"
+    }
+  for (let i = 31; i < 255; i+=16){
+      cells[i].style.backgroundColor = "black"
+    }
+  
 }
 
 function updateTimer() {
@@ -242,6 +256,7 @@ function moveFruit() {
       availableCells.push(i);
     }
   }
+  //There needs to be a way to stop fruit objects from appearing on the border cells - Buvan 
 
   if (availableCells.length > 0) {
     //picks a random position from available cells

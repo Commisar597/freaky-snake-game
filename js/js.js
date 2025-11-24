@@ -318,8 +318,9 @@ function movePlayer(direction) {
   }
   if(cells[newHeadPosition].style.backgroundColor === "black" || player_positions.includes(newHeadPosition)){
     gameOver();
-    return
+    return;
   }
+
     let tail = player_positions.pop();
     cells[tail].style.backgroundColor = "rgb(102, 145, 74)";
     cells[tail].style.border = "2px solid rgb(64, 98, 65)";
@@ -328,6 +329,7 @@ function movePlayer(direction) {
   cells[newHeadPosition].style.backgroundColor = currentSnakeColor;
   cells[newHeadPosition].style.border = "2px solid " + currentSnakeBorderColor;
 }
+
 function gameOver() {
   clearInterval(movementTick);
   clearInterval(timerInterval);

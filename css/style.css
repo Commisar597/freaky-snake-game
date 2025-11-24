@@ -101,4 +101,9 @@ h3 {
   border-radius: 50%;
   z-index: 50; /*over the cells of the grid*/
   display: none;
+  margin: 3.5px;
+}
+
+.description {
+  margin: 0 10px 0 10px;
 }

@@ -28,31 +28,48 @@
       </aside>
       <main class="main">
         <!--If anyone knows how to individually align these 4 items to(left, left, middle, right) then please do so thx-->
-          <div class="topMain">
-            <!--We'll add the images for the game later on-->
-            <span><img src="../images/av75ec8f90c1751f34dfe.png" width="40px" alt="Timer icon" /></span>
-            <span><h2 id="timer">1:30</h2></span>
-            <!--Place for game-->
-            <span><button id = "playbutton">Play</a></button></span>
-            <span><h2 id="points">Point number: 0</h2></span>
-          </div>
+        <div class="topMain">
+          <!--We'll add the images for the game later on-->
+          <span
+            ><img
+              src="../images/av75ec8f90c1751f34dfe.png"
+              width="40px"
+              alt="Timer icon"
+          /></span>
+          <span><h2 id="timer">1:30</h2></span>
+          <!--Place for game-->
+          <span><button id="playbutton">Play</button></span>
+          <span><h2 id="points">Point number: 0</h2></span>
+        </div>
         <div class="screen">
           <div id="fruitsId"></div>
         </div>
-        <div class="">
+        <div class="description">
           <!--If we need some under the game in 1 block-->
           <!--Don't think we will need space under game block H.N-->
           <!--Nvm game description can go here-->
+          <p>
+            The game starts by left-clicking on the „Play” button on the screen
+            while on the game website and it drops into the game. There will be
+            a grid of cells with the snake in it. The snake moves by itself in
+            the direction it’s head is facing. The snake's head is oriented by
+            using the arrow keys, or WASD on the keyboard. There will appear
+            items on the grid which, when collided with, will add or remove from
+            your overall score. You have 1:30 minutes to earn as much points as
+            you can get. The game stops if the snake hits the borders or go into
+            itslef. At the end you can see the points you have earned and the
+            highest score is saved.
+          </p>
         </div>
       </main>
       <aside class="small">
-        
         <h2>Highest points:</h2>
-        <span><!--Insert element for holding the highest point achieved--></span>
+        <span
+          ><!--Insert element for holding the highest point achieved--></span
+        >
         <span id="bestScore">0</span>
       </aside>
     </div>
     <script src="../js/js.js"></script>
-    <script src="../js/layouts.js"></script>
   </body>
 </html>

@@ -83,7 +83,7 @@ h3 {
 }
 
 .screen {
-  /*Specifically the game screen, and 16x16 grid that it will play on*/
+  /*Specifically the game screen in which the snake will move*/
   display: grid;
   grid-template-columns: repeat(16, 40px);
   grid-template-rows: repeat(16, 40px);
@@ -99,6 +99,6 @@ h3 {
   height: 30px;
   background-color: red;
   border-radius: 50%;
-  z-index: 10; /*over the cells of the grid*/
+  z-index: 50; /*over the cells of the grid*/
   display: none;
 }

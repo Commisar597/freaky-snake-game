@@ -158,21 +158,12 @@ window.addEventListener("beforeunload", function () {
 
 var direction = "up";
 let speed = 150;
-let speedIncrease = 10;
-let minSpeed = 80;
 let score = 0; //counter
 let timeInterval; //controls the clock display
 let seconds = 30; //starting seconds
 let minutes = 1; //starting minutes
 const timerEvents = new EventTarget();
 let movementTick = null;
-
-//hiding the fruit object
-//What is this? H.N
-
-if (fruit) {
-  fruit.style.display = "none";
-}
 
 function CreateGrid() {
 
@@ -181,8 +172,8 @@ function CreateGrid() {
     clearInterval(timerInterval)
     player_positions.forEach(()=>{
     player_positions.pop})
-
     player_positions = [120, 136];
+    direction = "up";
   }
 
   movementTick = setInterval(() => {
@@ -304,13 +295,15 @@ playbutton.addEventListener("click", CreateGrid);
 
 function movePlayer(direction) {
   let headPosition = player_positions[0];
+  let newHeadPosition;
+  
     if (headPosition === fruitPosition) {
     score++; //increase the score
     pointsDisplay.textContent = "Point number: " + score; //updates the element text
     growPlayer();
     moveFruit(); //place a new fruits
   }
-  let newHeadPosition;
+  
   if (direction === "up") {
     newHeadPosition = headPosition - collumn;
   }
@@ -324,14 +317,9 @@ function movePlayer(direction) {
     newHeadPosition = headPosition + row;
   }
   if(cells[newHeadPosition].style.backgroundColor === "black" || player_positions.includes(newHeadPosition)){
-    clearInterval(movementTick);
-    clearInterval(timerInterval);
-    saveBestScore();
-    alert(`Game Over! Your score: ${score}`);
+    gameOver();
+    return
   }
-  //moves the fruit if the equality is true
-
-    //no collision, the snakes moves normally
     let tail = player_positions.pop();
     cells[tail].style.backgroundColor = "rgb(102, 145, 74)";
     cells[tail].style.border = "2px solid rgb(64, 98, 65)";
@@ -340,32 +328,32 @@ function movePlayer(direction) {
   cells[newHeadPosition].style.backgroundColor = currentSnakeColor;
   cells[newHeadPosition].style.border = "2px solid " + currentSnakeBorderColor;
 }
-
+function gameOver() {
+  clearInterval(movementTick);
+  clearInterval(timerInterval);
+  saveBestScore();
+  alert(`Game Over! Your score: ${score}`);
+}
 document.addEventListener("keydown", (event) => {
   if (cells.length === 0) return;
 
-  if (event.key === "w" || event.key === "W" || event.key === "ArrowUp" && direction !== "down") {
+  if ((event.key === "w" || event.key === "W" || event.key === "ArrowUp") && direction !== "down") 
+  {
     direction = "up";
   }
-  if (event.key === "s" || event.key === "S" || event.key === "ArrowDown" && direction !== "up") {
+  if ((event.key === "s" || event.key === "S" || event.key === "ArrowDown") && direction !== "up")
+  {
     direction = "down";
   }
-  if (event.key === "a" || event.key === "A" || event.key === "ArrowLeft" && direction !== "right") {
+  if ((event.key === "a" || event.key === "A" || event.key === "ArrowLeft") && direction !== "right") 
+  {
     direction = "left";
   }
-  if (event.key === "d" || event.key === "D" || event.key === "ArrowRight" && direction !== "left") {
+  if ((event.key === "d" || event.key === "D" || event.key === "ArrowRight") && direction !== "left") 
+  {
     direction = "right";
   }
 });
-//this function is not used anywhere Artem, how do we use this? H.N
-function autoMoveLoop() {
-  autoMoveSnake();
-
-  speed -= speedIncrease;
-  if (speed < minSpeed) speed = minSpeed;
-
-  setTimeout(autoMoveLoop, speed);
-}
 
 function growPlayer() {
   let tail = player_positions[0];

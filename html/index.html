@@ -10,62 +10,65 @@
 </head>
 
 <body>
-  <div class="container buildings">
-    <aside class="small">
-      <!--Place for settings-->
-      <h2>Settings</h2>
-      <h4>Choose snake color</h4>
-      <div id="snake_colors">
-        <button id="redColorSnake">R</button>
-        <button id="yellowColorSnake">Y</button>
-        <button id="blueColorSnake">B</button>
-      </div>
-      <h4>Choose style</h4>
-      <div id="background_colors">
-        <button id="pinkBG">Pink</button>
-        <button id="blueBG">Blue</button>
-        <button id="greenBG">Green</button>
-      </div>
-    </aside>
-    <main class="main">
-      <!--If anyone knows how to individually align these 4 items to(left, left, middle, right) then please do so thx-->
-      <div class="topMain">
-        <!--We'll add the images for the game later on-->
-        <span><img src="../images/av75ec8f90c1751f34dfe.png" width="40px" alt="Timer icon" /></span>
-        <span>
-          <h2 id="timer">1:30</h2>
-        </span>
-        <!--Place for game-->
-        <span><button id="playbutton">Play</button></span>
-        <span>
-          <h2 id="points">Point number: 0</h2>
-        </span>
-      </div>
-      <div class="screen">
-        <div id="fruitsId"></div>
-      </div>
+  <div class="container">
+    <div class=" buildings">
+      <aside class="small">
+        <!--Place for settings-->
+        <h2>Settings</h2>
+        <h4>Choose snake color</h4>
+        <div id="snake_colors">
+          <button id="redColorSnake">R</button>
+          <button id="yellowColorSnake">Y</button>
+          <button id="blueColorSnake">B</button>
+        </div>
+        <h4>Choose style</h4>
+        <div id="background_colors">
+          <button id="pinkBG">Pink</button>
+          <button id="blueBG">Blue</button>
+          <button id="greenBG">Green</button>
+        </div>
+      </aside>
+      <main class="main">
+        <!--If anyone knows how to individually align these 4 items to(left, left, middle, right) then please do so thx-->
+        <div class="topMain">
+          <!--We'll add the images for the game later on-->
+          <span><img src="../images/av75ec8f90c1751f34dfe.png" width="40px" alt="Timer icon" /></span>
+          <span>
+            <h2 id="timer">1:30</h2>
+          </span>
+          <!--Place for game-->
+          <span><button id="playbutton">Play</button></span>
+          <span>
+            <h2 id="points">Point number: 0</h2>
+          </span>
+        </div>
+        <div class="screen">
+          <div id="fruitsId"></div>
+        </div>
 
-    </main>
-    <aside class="small">
-      <h2>Highest points:</h2>
-      <span><!--Insert element for holding the highest point achieved--></span>
-      <span id="bestScore">0</span>
-    </aside>
-  </div>
-  <div class="description ">
-    <!--If we need some under the game in 1 block-->
-    <!--Don't think we will need space under game block H.N-->
-    <!--Nvm game description can go here-->
-    <p>
-      The game starts by left-clicking on the „Play” button.
-      There will be a grid of cells with a snake in it, this snake is moving on its own, and you can only orient its
-      movement using WASD on your keyboard.
-      A red object representing a fruit will appear randomly on this grid, when collided with your overall score will go
-      up by 1, and your snake will grow by 1.
-      You have 90 seconds to earn as many points as possible.
-      The game stops if the snake hits the borders, collides with part of its body, or if the timer runs out.
-      At the end you can see the points you have earned and your highest score will be saved.
-    </p>
+      </main>
+      <aside class="small">
+        <h2>Highest points:</h2>
+        <span><!--Insert element for holding the highest point achieved--></span>
+        <span id="bestScore">0</span>
+      </aside>
+    </div>
+    <div class="description ">
+      <!--If we need some under the game in 1 block-->
+      <!--Don't think we will need space under game block H.N-->
+      <!--Nvm game description can go here-->
+      <p>
+        The game starts by left-clicking on the „Play” button.
+        There will be a grid of cells with a snake in it, this snake is moving on its own, and you can only orient its
+        movement using WASD on your keyboard.
+        A red object representing a fruit will appear randomly on this grid, when collided with your overall score will
+        go
+        up by 1, and your snake will grow by 1.
+        You have 90 seconds to earn as many points as possible.
+        The game stops if the snake hits the borders, collides with part of its body, or if the timer runs out.
+        At the end you can see the points you have earned and your highest score will be saved.
+      </p>
+    </div>
   </div>
   <script src="../js/js.js"></script>
 </body>

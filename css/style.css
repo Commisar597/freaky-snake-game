@@ -114,5 +114,5 @@ p {
   padding: 10px;
   background-color: var(--bg-block-color);
   border: 2px solid var(--bg-block-border-color);
-    border-radius: 8px;
+  border-radius: 8px;
 }

@@ -104,8 +104,8 @@ document.getElementById("blueBG").addEventListener("click", function () {
   localStorage.setItem("--bg-block-border-color", "#1B274A");
   root.style.setProperty("--bg-block-color", "#1F315C");
   localStorage.setItem("--bg-block-color", "#1F315C");
-  root.style.setProperty("--text-primary-color", "#202430");
-  localStorage.setItem("--text-primary-color", "#202430");
+  root.style.setProperty("--text-primary-color", "#787878ff");
+  localStorage.setItem("--text-primary-color", "#787878ff");
   root.style.setProperty("--text-secondary-color", "#8FA2D0");
   localStorage.setItem("--text-secondary-color", "#8FA2D0");
   root.style.setProperty("--text-highlighted-color", "#5A8BFF");

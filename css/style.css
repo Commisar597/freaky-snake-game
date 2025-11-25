@@ -30,9 +30,11 @@ h3 {
   color: var(--text-highlighted2-color);
   margin: 0;
 }
-p{
- font-weight: bold; 
+
+p {
+  font-weight: bold;
 }
+
 .container {
   /*Global filter by page*/
   width: 100%;
@@ -101,11 +103,16 @@ p{
   height: 30px;
   background-color: red;
   border-radius: 50%;
-  z-index: 15; /*over the cells of the grid*/
+  z-index: 15;
+  /*over the cells of the grid*/
   display: none;
   margin: 3.5px;
 }
 
 .description {
-  margin: 0 10px 0 10px;
+  margin: 30px;
+  padding: 10px;
+  background-color: var(--bg-block-color);
+  border: 2px solid var(--bg-block-border-color);
+    border-radius: 8px;
 }

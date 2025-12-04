@@ -7,6 +7,8 @@ const timerDisplay = document.getElementById("timer");
 const row = 1;
 const collumn = 16;
 let root = document.documentElement;
+const snakeButtons = document.querySelectorAll("#snake_colors button");
+const bgButtons = document.querySelectorAll("#background_colors button");
 
 var savedScore = parseInt(localStorage.getItem("bestScore")) || 0;
 const BestScore = document.getElementById("bestScore");
@@ -80,7 +82,6 @@ var currentSnakeBorderColor = "rgba(114, 30, 30, 1)";
 document.getElementById("pinkBG").addEventListener("click", function () {
   //A function that is activated when you click the style change button and changes
   //  the data on the site and in local storage
-
   root.style.setProperty("--bg-layout-color", "#ffe4ea");
   localStorage.setItem("--bg-layout-color", "#ffe4ea");
   root.style.setProperty("--bg-block-border-color", "#ffdde5");
@@ -95,6 +96,7 @@ document.getElementById("pinkBG").addEventListener("click", function () {
   localStorage.setItem("--text-highlighted-color", "#e3006f");
   root.style.setProperty("--text-highlighted2-color", "#ff78a7");
   localStorage.setItem("--text-highlighted2-color", "#ff78a7");
+  activateButton(this, bgButtons);
 });
 
 document.getElementById("blueBG").addEventListener("click", function () {
@@ -112,6 +114,7 @@ document.getElementById("blueBG").addEventListener("click", function () {
   localStorage.setItem("--text-highlighted-color", "#5A8BFF");
   root.style.setProperty("--text-highlighted2-color", "#89A8FF");
   localStorage.setItem("--text-highlighted2-color", "#89A8FF");
+  activateButton(this, bgButtons);
 });
 
 document.getElementById("greenBG").addEventListener("click", function () {
@@ -129,6 +132,7 @@ document.getElementById("greenBG").addEventListener("click", function () {
   localStorage.setItem("--text-highlighted-color", "#27A05A");
   root.style.setProperty("--text-highlighted2-color", "#57D98B");
   localStorage.setItem("--text-highlighted2-color", "#57D98B");
+  activateButton(this, bgButtons);
 });
 
 document
@@ -136,6 +140,7 @@ document
   .addEventListener("click", function () {
     currentSnakeBorderColor = snakeBorderColors[0];
     currentSnakeColor = snakeColors[0];
+    activateButton(this, snakeButtons);
   });
 
 document
@@ -143,6 +148,7 @@ document
   .addEventListener("click", function () {
     currentSnakeBorderColor = snakeBorderColors[1];
     currentSnakeColor = snakeColors[1];
+    activateButton(this, snakeButtons);
   });
 
 document
@@ -150,7 +156,13 @@ document
   .addEventListener("click", function () {
     currentSnakeBorderColor = snakeBorderColors[2];
     currentSnakeColor = snakeColors[2];
+    activateButton(this, snakeButtons);
   });
+
+function activateButton(active, group) {
+  group.forEach(btn => btn.classList.remove("activeButton"));
+  active.classList.add("activeButton");
+}
 
 window.addEventListener("beforeunload", function () {
   saveBestScore();
@@ -167,11 +179,12 @@ let movementTick = null;
 
 function CreateGrid() {
 
-    if (movementTick) {
+  if (movementTick) {
     clearInterval(movementTick);
     clearInterval(timerInterval)
-    player_positions.forEach(()=>{
-    player_positions.pop})
+    player_positions.forEach(() => {
+      player_positions.pop
+    })
     player_positions = [120, 136];
     direction = "up";
   }
@@ -182,9 +195,9 @@ function CreateGrid() {
         detail: { value: 1 },
       })
     );
-  },speed );
+  }, speed);
 
-  grid.innerHTML = ""; 
+  grid.innerHTML = "";
   cells = [];
   score = 0; //resetting the score
   pointsDisplay.textContent = "Point number: 0"; //update the element text
@@ -192,8 +205,8 @@ function CreateGrid() {
   //initializing count down initial values and setting the initial display
   seconds = 30;
   minutes = 1;
-  timerDisplay.textContent = minutes+":"+seconds;
-  for (let i = 0; i < 256; i++) { 
+  timerDisplay.textContent = minutes + ":" + seconds;
+  for (let i = 0; i < 256; i++) {
     const cell = document.createElement("div");
     cell.className = "cell";
     grid.appendChild(cell);
@@ -208,25 +221,24 @@ function CreateGrid() {
   timerInterval = setInterval(updateTimer, 1000); //starting the countdown for the timer (every 1 second (1000 ms))
 
 }
-  function createBorder() {
-  for (let i = 0; i < 16; i++){
-      cells[i].style.backgroundColor = "black"
-    }
-  for (let i = 16; i < 240; i+=16){
-      cells[i].style.backgroundColor = "black"
-    }
-  for (let i = 240; i < 256; i++){
-      cells[i].style.backgroundColor = "black"
-    }
-  for (let i = 31; i < 255; i+=16){
-      cells[i].style.backgroundColor = "black"
-    }
+function createBorder() {
+  for (let i = 0; i < 16; i++) {
+    cells[i].style.backgroundColor = "black"
   }
+  for (let i = 16; i < 240; i += 16) {
+    cells[i].style.backgroundColor = "black"
+  }
+  for (let i = 240; i < 256; i++) {
+    cells[i].style.backgroundColor = "black"
+  }
+  for (let i = 31; i < 255; i += 16) {
+    cells[i].style.backgroundColor = "black"
+  }
+}
 
-timerEvents.addEventListener("tick", () => 
-  {
+timerEvents.addEventListener("tick", () => {
   movePlayer(direction);
-  })
+})
 
 function updateTimer() {
   //checking if the time already ran out
@@ -235,8 +247,9 @@ function updateTimer() {
     clearInterval(movementTick); //stops the game
     saveBestScore();
     alert(`Game Over! Your score: ${score}`);
-    player_positions.forEach(()=>{
-      player_positions.pop})
+    player_positions.forEach(() => {
+      player_positions.pop
+    })
     player_positions = [120, 184];
     //After alert it stops the execution
   }
@@ -296,14 +309,14 @@ playbutton.addEventListener("click", CreateGrid);
 function movePlayer(direction) {
   let headPosition = player_positions[0];
   let newHeadPosition;
-  
-    if (headPosition === fruitPosition) {
+
+  if (headPosition === fruitPosition) {
     score++; //increase the score
     pointsDisplay.textContent = "Point number: " + score; //updates the element text
     growPlayer();
     moveFruit(); //place a new fruits
   }
-  
+
   if (direction === "up") {
     newHeadPosition = headPosition - collumn;
   }
@@ -316,16 +329,16 @@ function movePlayer(direction) {
   if (direction === "right") {
     newHeadPosition = headPosition + row;
   }
-  if(cells[newHeadPosition].style.backgroundColor === "black" || player_positions.includes(newHeadPosition)){
+  if (cells[newHeadPosition].style.backgroundColor === "black" || player_positions.includes(newHeadPosition)) {
     gameOver();
     return;
   }
 
-    let tail = player_positions.pop();
-    cells[tail].style.backgroundColor = "rgb(102, 145, 74)";
-    cells[tail].style.border = "2px solid rgb(64, 98, 65)";
-    player_positions.unshift(newHeadPosition);
-  
+  let tail = player_positions.pop();
+  cells[tail].style.backgroundColor = "rgb(102, 145, 74)";
+  cells[tail].style.border = "2px solid rgb(64, 98, 65)";
+  player_positions.unshift(newHeadPosition);
+
   cells[newHeadPosition].style.backgroundColor = currentSnakeColor;
   cells[newHeadPosition].style.border = "2px solid " + currentSnakeBorderColor;
 }
@@ -337,22 +350,24 @@ function gameOver() {
   alert(`Game Over! Your score: ${score}`);
 }
 document.addEventListener("keydown", (event) => {
+
+  const keys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
+  if (keys.includes(event.key)) {
+    event.preventDefault();
+  }
+
   if (cells.length === 0) return;
 
-  if ((event.key === "w" || event.key === "W" || event.key === "ArrowUp") && direction !== "down") 
-  {
+  if ((event.key === "w" || event.key === "W" || event.key === "ArrowUp") && direction !== "down") {
     direction = "up";
   }
-  if ((event.key === "s" || event.key === "S" || event.key === "ArrowDown") && direction !== "up")
-  {
+  if ((event.key === "s" || event.key === "S" || event.key === "ArrowDown") && direction !== "up") {
     direction = "down";
   }
-  if ((event.key === "a" || event.key === "A" || event.key === "ArrowLeft") && direction !== "right") 
-  {
+  if ((event.key === "a" || event.key === "A" || event.key === "ArrowLeft") && direction !== "right") {
     direction = "left";
   }
-  if ((event.key === "d" || event.key === "D" || event.key === "ArrowRight") && direction !== "left") 
-  {
+  if ((event.key === "d" || event.key === "D" || event.key === "ArrowRight") && direction !== "left") {
     direction = "right";
   }
 });

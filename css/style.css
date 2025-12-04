@@ -9,6 +9,9 @@
   --a: 32px;
   --b: 24px;
   --c: 16px;
+  --i: 28px;
+  --j: 20px;
+  --l: 12px;
   --A: 512px;
   --B: 384px;
   --C: 256px;
@@ -105,10 +108,17 @@ p {
   position: relative;
 }
 
+.activeButton {
+  outline: 3px solid var(--text-highlighted-color);
+  background-color: var(--text-highlighted2-color);
+  color: rgb(255, 255, 255);
+  border-radius: 6px;
+}
+
 #fruitsId {
   position: absolute;
-  width: 30px;
-  height: 30px;
+  width: var(--i);
+  height: var(--i);
   background-color: red;
   border-radius: 50%;
   z-index: 15;
@@ -159,6 +169,16 @@ p {
     padding: 5px;
   }
 
+  .activeButton {
+    outline: 2px solid var(--text-highlighted-color);
+  }
+
+
+  #fruitsId {
+    width: var(--j);
+    height: var(--j);
+  }
+
   .screen {
     grid-template-columns: repeat(16, var(--b));
     grid-template-rows: repeat(16, var(--b));
@@ -198,6 +218,15 @@ p {
 
   .small {
     padding: 2px;
+  }
+
+  .activeButton {
+    outline: 1px solid var(--text-highlighted-color);
+  }
+
+  #fruitsId {
+    width: var(--l);
+    height: var(--l);
   }
 
   .screen {

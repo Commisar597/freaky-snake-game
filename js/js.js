@@ -339,19 +339,19 @@ function gameOver() {
 document.addEventListener("keydown", (event) => {
   if (cells.length === 0) return;
 
-  if ((event.key === "w" || event.key === "W") && direction !== "down") 
+  if ((event.key === "w" || event.key === "W" || event.key === "ArrowUp") && direction !== "down") 
   {
     direction = "up";
   }
-  if ((event.key === "s" || event.key === "S") && direction !== "up")
+  if ((event.key === "s" || event.key === "S" || event.key === "ArrowDown") && direction !== "up")
   {
     direction = "down";
   }
-  if ((event.key === "a" || event.key === "A") && direction !== "right") 
+  if ((event.key === "a" || event.key === "A" || event.key === "ArrowLeft") && direction !== "right") 
   {
     direction = "left";
   }
-  if ((event.key === "d" || event.key === "D") && direction !== "left") 
+  if ((event.key === "d" || event.key === "D" || event.key === "ArrowRight") && direction !== "left") 
   {
     direction = "right";
   }

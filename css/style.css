@@ -22,6 +22,9 @@
 body {
   margin: 0;
   background-color: var(--bg-layout-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 h2,
@@ -43,8 +46,8 @@ p {
 .container {
   /*Global filter by page*/
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: 1000px;
+  margin: 0 30px;
   padding: 0 40px;
 }
 
@@ -126,12 +129,12 @@ p {
 
   h1,
   h2 {
-    font-size: 28px;
+    font-size: 24px;
   }
 
   h3,
   h4 {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   p {
@@ -139,8 +142,21 @@ p {
     font-size: 16px;
   }
 
+  .container {
+    margin: 0 20px;
+    padding: 0 20px;
+  }
+
   .main {
     width: var(--B);
+  }
+
+  .buildings {
+    gap: 15px;
+  }
+
+  .small {
+    padding: 5px;
   }
 
   .screen {
@@ -154,12 +170,12 @@ p {
 
   h1,
   h2 {
-    font-size: 24px;
+    font-size: 18px;
   }
 
   h3,
   h4 {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   p {
@@ -167,8 +183,21 @@ p {
     font-size: 14px;
   }
 
+  .container {
+    margin: 0 10px;
+    padding: 0 10px;
+  }
+
   .main {
     width: var(--C);
+  }
+
+  .buildings {
+    gap: 10px;
+  }
+
+  .small {
+    padding: 2px;
   }
 
   .screen {

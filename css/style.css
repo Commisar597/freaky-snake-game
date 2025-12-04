@@ -108,7 +108,8 @@ p {
   position: relative;
 }
 
-.activeButton {
+.activeButton { 
+  /*Class that highlights the selected option*/
   outline: 3px solid var(--text-highlighted-color);
   background-color: var(--text-highlighted2-color);
   color: rgb(255, 255, 255);

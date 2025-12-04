@@ -166,4 +166,4 @@ function activateButton(active, group) {
 
 window.addEventListener("beforeunload", function () {
   saveBestScore();
-});
+});``

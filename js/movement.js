@@ -9,6 +9,7 @@ let movementTick = null;
 
 function CreateGrid() {
 
+  // If there is already an active movement tick, stop it
   if (movementTick) {
     clearInterval(movementTick);
     clearInterval(timerInterval)
@@ -19,6 +20,7 @@ function CreateGrid() {
     direction = "up";
   }
 
+  // we create a new interval of snake movement
   movementTick = setInterval(() => {
     timerEvents.dispatchEvent(
       new CustomEvent("tick", {
@@ -76,6 +78,7 @@ function movePlayer(direction) {
   let headPosition = player_positions[0];
   let newHeadPosition;
 
+  // If the head is on the fruit, we increase the points and the snake
   if (headPosition === fruitPosition) {
     score++; //increase the score
     pointsDisplay.textContent = "Point number: " + score; //updates the element text
@@ -83,6 +86,7 @@ function movePlayer(direction) {
     moveFruit(); //place a new fruits
   }
 
+  // we calculate the new position of the head depending on the direction
   if (direction === "up") {
     newHeadPosition = headPosition - collumn;
   }
@@ -95,11 +99,14 @@ function movePlayer(direction) {
   if (direction === "right") {
     newHeadPosition = headPosition + row;
   }
+
+  // check for collisions with boundaries or with itself
   if (cells[newHeadPosition].style.backgroundColor === "black" || player_positions.includes(newHeadPosition)) {
     gameOver();
     return;
   }
 
+  // We move the snake: we remove the tail and add a new head
   let tail = player_positions.pop();
   cells[tail].style.backgroundColor = "rgb(102, 145, 74)";
   cells[tail].style.border = "2px solid rgb(64, 98, 65)";

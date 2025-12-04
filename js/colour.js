@@ -76,8 +76,8 @@ var snakeBorderColors = [
   "rgba(140, 165, 40, 1)",
   "rgba(42, 63, 146, 1)",
 ];
-var currentSnakeColor = "rgba(160, 41, 41, 1)";
-var currentSnakeBorderColor = "rgba(114, 30, 30, 1)";
+var currentSnakeColor = "rgba(160, 41, 41, 1)"; // current color of the snake
+var currentSnakeBorderColor = "rgba(114, 30, 30, 1)"; // current snake border
 
 document.getElementById("pinkBG").addEventListener("click", function () {
   //A function that is activated when you click the style change button and changes

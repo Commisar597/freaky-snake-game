@@ -124,6 +124,15 @@ p {
 
 @media (max-width: 1024px) {
 
+  p {
+    font-weight: bold;
+    font-size: 16px;
+  }
+
+  .main {
+    width: var(--B);
+  }
+
   .screen {
     grid-template-columns: repeat(16, var(--b));
     grid-template-rows: repeat(16, var(--b));
@@ -132,6 +141,15 @@ p {
 }
 
 @media (max-width: 768px) {
+
+  p {
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  .main {
+    width: var(--C);
+  }
 
   .screen {
     grid-template-columns: repeat(16, var(--c));

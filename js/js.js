@@ -1,25 +1,53 @@
+// =====================
+// DOM elements and base variables
+// =====================
+
+// Main game grid container
 const grid = document.querySelector(".screen");
+
+// Play / restart button
 const playbutton = document.getElementById("playbutton");
+
+// Initial snake positions (cell indexes)
 let player_positions = [120, 136];
+
+// Fruit DOM element
 const fruit = document.getElementById("fruitsId");
+
+// Score and timer displays
 const pointsDisplay = document.getElementById("points");
 const timerDisplay = document.getElementById("timer");
-const row = 1;
-const collumn = 16;
+
+// Grid movement helpers
+const row = 1;        // left / right step
+const collumn = 16;   // up / down step
+
+// Root element for CSS variables
 let root = document.documentElement;
+
+// UI buttons
 const snakeButtons = document.querySelectorAll("#snake_colors button");
 const bgButtons = document.querySelectorAll("#background_colors button");
+
+// =====================
+// Best score (localStorage)
+// =====================
 
 var savedScore = parseInt(localStorage.getItem("bestScore")) || 0;
 const BestScore = document.getElementById("bestScore");
 BestScore.textContent = parseInt(localStorage.getItem("bestScore")) || 0;
 
+// Save best score if current score is higher
 function saveBestScore() {
   let savedScore = localStorage.getItem("bestScore") || 0;
   if (score > savedScore) {
     localStorage.setItem("bestScore", score);
   }
 }
+
+// =====================
+// Loading saved theme values
+// =====================
 
 //loading the variable with styles elements in local storage
 var savedBg = localStorage.getItem("bgColor");
@@ -30,6 +58,7 @@ var savedSecondary = localStorage.getItem("secondaryColor");
 var savedHL = localStorage.getItem("highlightedColor");
 var savedHL2 = localStorage.getItem("highlighted2Color");
 
+// Apply saved theme on page load
 document.addEventListener("DOMContentLoaded", function () {
   //The function works when the program starts thanks to the "DOMContentLoaded"
   //event, changing the style to the one saved in local storage
@@ -66,6 +95,10 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+// =====================
+// Snake colors
+// =====================
+
 var snakeColors = [
   "rgba(160, 41, 41, 1)",
   "rgba(215, 254, 59, 1)",
@@ -79,9 +112,13 @@ var snakeBorderColors = [
 var currentSnakeColor = "rgba(160, 41, 41, 1)";
 var currentSnakeBorderColor = "rgba(114, 30, 30, 1)";
 
+// =====================
+// Background theme buttons
+// =====================
+
 document.getElementById("pinkBG").addEventListener("click", function () {
   //A function that is activated when you click the style change button and changes
-  //  the data on the site and in local storage
+  // the data on the site and in local storage
   root.style.setProperty("--bg-layout-color", "#ffe4ea");
   localStorage.setItem("--bg-layout-color", "#ffe4ea");
   root.style.setProperty("--bg-block-border-color", "#ffdde5");
@@ -100,6 +137,7 @@ document.getElementById("pinkBG").addEventListener("click", function () {
 });
 
 document.getElementById("blueBG").addEventListener("click", function () {
+  // Apply blue theme and save to localStorage
   root.style.setProperty("--bg-layout-color", "#0C1226");
   localStorage.setItem("--bg-layout-color", "#0C1226");
   root.style.setProperty("--bg-block-border-color", "#1B274A");
@@ -118,6 +156,7 @@ document.getElementById("blueBG").addEventListener("click", function () {
 });
 
 document.getElementById("greenBG").addEventListener("click", function () {
+  // Apply green theme and save to localStorage
   root.style.setProperty("--bg-layout-color", "#dfffe7ff");
   localStorage.setItem("--bg-layout-color", "#dfffe7ff");
   root.style.setProperty("--bg-block-border-color", "#C7EAD1");
@@ -134,6 +173,10 @@ document.getElementById("greenBG").addEventListener("click", function () {
   localStorage.setItem("--text-highlighted2-color", "#57D98B");
   activateButton(this, bgButtons);
 });
+
+// =====================
+// Snake color buttons
+// =====================
 
 document
   .getElementById("redColorSnake") // snake colour
@@ -159,14 +202,20 @@ document
     activateButton(this, snakeButtons);
   });
 
+// Highlight active button in a group
 function activateButton(active, group) {
   group.forEach(btn => btn.classList.remove("activeButton"));
   active.classList.add("activeButton");
 }
 
+// Save score before page unload
 window.addEventListener("beforeunload", function () {
   saveBestScore();
 });
+
+// =====================
+// Game state variables
+// =====================
 
 var direction = "up";
 let speed = 150;
@@ -177,8 +226,12 @@ let minutes = 1; //starting minutes
 const timerEvents = new EventTarget();
 let movementTick = null;
 
-function CreateGrid() {
+// =====================
+// Game initialization
+// =====================
 
+function CreateGrid() {
+  // Reset previous game state if game is restarted
   if (movementTick) {
     clearInterval(movementTick);
     clearInterval(timerInterval)
@@ -189,6 +242,7 @@ function CreateGrid() {
     direction = "up";
   }
 
+  // Game tick event (movement speed)
   movementTick = setInterval(() => {
     timerEvents.dispatchEvent(
       new CustomEvent("tick", {
@@ -197,30 +251,41 @@ function CreateGrid() {
     );
   }, speed);
 
+  // Grid setup
   grid.innerHTML = "";
   cells = [];
   score = 0; //resetting the score
   pointsDisplay.textContent = "Point number: 0"; //update the element text
   grid.appendChild(fruit); //showing the fruit object
-  //initializing count down initial values and setting the initial display
+
+  // Timer reset
   seconds = 30;
   minutes = 1;
   timerDisplay.textContent = minutes + ":" + seconds;
+
+  // Create 16x16 grid
   for (let i = 0; i < 256; i++) {
     const cell = document.createElement("div");
     cell.className = "cell";
     grid.appendChild(cell);
     cells.push(cell);
   }
+
+  // Draw initial snake
   player_positions.forEach((pos) => {
     cells[pos].style.backgroundColor = currentSnakeColor;
     cells[pos].style.border = "2px solid " + currentSnakeBorderColor;
   });
+
   createBorder();
   moveFruit(); //initial fruit placement
   timerInterval = setInterval(updateTimer, 1000); //starting the countdown for the timer (every 1 second (1000 ms))
-
 }
+
+// =====================
+// Border creation
+// =====================
+
 function createBorder() {
   for (let i = 0; i < 16; i++) {
     cells[i].style.backgroundColor = "black"
@@ -236,9 +301,14 @@ function createBorder() {
   }
 }
 
+// Move snake on every tick
 timerEvents.addEventListener("tick", () => {
   movePlayer(direction);
 })
+
+// =====================
+// Timer logic
+// =====================
 
 function updateTimer() {
   //checking if the time already ran out
@@ -281,6 +351,10 @@ function saveBestScore() {
   }
 }
 
+// =====================
+// Fruit logic
+// =====================
+
 //random fruits
 function moveFruit() {
   const availableCells = []; //an array for available cells
@@ -304,12 +378,17 @@ function moveFruit() {
   }
 }
 
+// =====================
+// Player movement
+// =====================
+
 playbutton.addEventListener("click", CreateGrid);
 
 function movePlayer(direction) {
   let headPosition = player_positions[0];
   let newHeadPosition;
 
+  // Eat fruit
   if (headPosition === fruitPosition) {
     score++; //increase the score
     pointsDisplay.textContent = "Point number: " + score; //updates the element text
@@ -317,6 +396,7 @@ function movePlayer(direction) {
     moveFruit(); //place a new fruits
   }
 
+  // Direction handling
   if (direction === "up") {
     newHeadPosition = headPosition - collumn;
   }
@@ -329,11 +409,14 @@ function movePlayer(direction) {
   if (direction === "right") {
     newHeadPosition = headPosition + row;
   }
+
+  // Collision detection
   if (cells[newHeadPosition].style.backgroundColor === "black" || player_positions.includes(newHeadPosition)) {
     gameOver();
     return;
   }
 
+  // Move snake body
   let tail = player_positions.pop();
   cells[tail].style.backgroundColor = "rgb(102, 145, 74)";
   cells[tail].style.border = "2px solid rgb(64, 98, 65)";
@@ -343,12 +426,21 @@ function movePlayer(direction) {
   cells[newHeadPosition].style.border = "2px solid " + currentSnakeBorderColor;
 }
 
+// =====================
+// Game over
+// =====================
+
 function gameOver() {
   clearInterval(movementTick);
   clearInterval(timerInterval);
   saveBestScore();
   alert(`Game Over! Your score: ${score}`);
 }
+
+// =====================
+// Keyboard controls
+// =====================
+
 document.addEventListener("keydown", (event) => {
 
   const keys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
@@ -371,6 +463,10 @@ document.addEventListener("keydown", (event) => {
     direction = "right";
   }
 });
+
+// =====================
+// Snake growth
+// =====================
 
 function growPlayer() {
   let tail = player_positions[0];

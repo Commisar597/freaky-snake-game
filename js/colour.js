@@ -178,9 +178,8 @@ let minutes = 1; //starting minutes
 const timerEvents = new EventTarget();
 let movementTick = null;
 
-//Function called when playbutton is pressed
 function CreateGrid() {
-//If movementTick Interval is ongoing already, it clears all existing intervals, and resets the game variables
+
     if (movementTick) {
     clearInterval(movementTick);
     clearInterval(timerInterval)
@@ -188,11 +187,8 @@ function CreateGrid() {
     player_positions.pop})
     player_positions = [120, 136];
     direction = "up";
-    score = 0;
-    seconds = 30;
-    minutes = 1; 
   }
-//This is the interval that the snake uses to determine how fast it should move inside the grid based on the speed variable
+
   movementTick = setInterval(() => {
     timerEvents.dispatchEvent(
       new CustomEvent("tick", {
@@ -200,34 +196,31 @@ function CreateGrid() {
       })
     );
   },speed );
-  //Clears all div elements inside the grid 
+
   grid.innerHTML = ""; 
   cells = [];
+  score = 0; //resetting the score
   pointsDisplay.textContent = "Point number: 0"; //update the element text
   grid.appendChild(fruit); //showing the fruit object
   //initializing count down initial values and setting the initial display
+  seconds = 30;
+  minutes = 1;
   timerDisplay.textContent = minutes+":"+seconds;
-  //Create grid by appending div elements of class "cell" inside the grid of class .screen, this results in a 16*16 grid of cells.
-  //It also stores all div elements inside an array
   for (let i = 0; i < 256; i++) { 
     const cell = document.createElement("div");
     cell.className = "cell";
     grid.appendChild(cell);
     cells.push(cell);
   }
-  //Initial Snake positions are colored here based on chosen snake color
   player_positions.forEach((pos) => {
     cells[pos].style.backgroundColor = currentSnakeColor;
     cells[pos].style.border = "2px solid " + currentSnakeBorderColor;
   });
-  createBorder();//Create surrounding border
+  createBorder();
   moveFruit(); //initial fruit placement
   timerInterval = setInterval(updateTimer, 1000); //starting the countdown for the timer (every 1 second (1000 ms))
-}
-//playButton button to call CreateGrid() on click event
-playbutton.addEventListener("click", CreateGrid);
 
-//Function for painting border div elements to black, indicating border. Border cells are checked for collision.
+}
   function createBorder() {
   for (let i = 0; i < 16; i++){
       cells[i].style.backgroundColor = "black"
@@ -242,7 +235,7 @@ playbutton.addEventListener("click", CreateGrid);
       cells[i].style.backgroundColor = "black"
     }
   }
-//Moves the player if the tick Interval exists.
+
 timerEvents.addEventListener("tick", () => 
   {
   movePlayer(direction);
@@ -288,7 +281,7 @@ function saveBestScore() {
   }
 }
 
-//This function moves the fruit based on what cells are available(not snake or border)
+//random fruits
 function moveFruit() {
   const availableCells = []; //an array for available cells
   //loop to find the cells that are not part of the snake or the border
@@ -311,22 +304,9 @@ function moveFruit() {
   }
 }
 
-//Adds a new element inside the player_positions array.
-function growPlayer() {
-  let tail = player_positions[0];
-  player_positions.unshift(tail);
-}
-
-//Function for clearing exisitng intervals, and saving the score 
-function gameOver() {
-  clearInterval(movementTick);
-  clearInterval(timerInterval);
-  saveBestScore();
-  alert(`Game Over! Your score: ${score}`);
-}
+playbutton.addEventListener("click", CreateGrid);
 
 function movePlayer(direction) {
-  //Current head position is the first element inside the array
   let headPosition = player_positions[0];
   let newHeadPosition;
   
@@ -336,7 +316,7 @@ function movePlayer(direction) {
     growPlayer();
     moveFruit(); //place a new fruits
   }
-  //Calculates where the new head position would be based on direction
+  
   if (direction === "up") {
     newHeadPosition = headPosition - collumn;
   }
@@ -349,24 +329,26 @@ function movePlayer(direction) {
   if (direction === "right") {
     newHeadPosition = headPosition + row;
   }
-  //Collision detection if newHeadPosition would be inside the border, or inside the snake
   if(cells[newHeadPosition].style.backgroundColor === "black" || player_positions.includes(newHeadPosition)){
     gameOver();
     return;
   }
-  //Removes the tail element from the array, and assigns it to tail variable
+
     let tail = player_positions.pop();
     cells[tail].style.backgroundColor = "rgb(102, 145, 74)";
     cells[tail].style.border = "2px solid rgb(64, 98, 65)";
-    //Finally adds new head, and colors the new position
     player_positions.unshift(newHeadPosition);
   
   cells[newHeadPosition].style.backgroundColor = currentSnakeColor;
   cells[newHeadPosition].style.border = "2px solid " + currentSnakeBorderColor;
 }
 
-//Event Listener for button presses using WASD for direction input, it doesn't check for button presses if the cell array is not populated yet
-//It also doesn't let the snake to move the opposite direction(cannot go up its going down)
+function gameOver() {
+  clearInterval(movementTick);
+  clearInterval(timerInterval);
+  saveBestScore();
+  alert(`Game Over! Your score: ${score}`);
+}
 document.addEventListener("keydown", (event) => {
   if (cells.length === 0) return;
 
@@ -390,3 +372,8 @@ document.addEventListener("keydown", (event) => {
 =======
 });``
 >>>>>>> c4d4468b973f77e22782308f144961217d4a1e89:js/colour.js
+
+function growPlayer() {
+  let tail = player_positions[0];
+  player_positions.unshift(tail);
+}

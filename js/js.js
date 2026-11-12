@@ -450,16 +450,16 @@ document.addEventListener("keydown", (event) => {
 
   if (cells.length === 0) return;
 
-  if ((event.key === "w" || event.key === "W" || event.key === "ArrowUp") && direction !== "down") {
+  if ((event.code === "KeyW" || event.code === "ArrowUp") && direction !== "down") {
     direction = "up";
   }
-  if ((event.key === "s" || event.key === "S" || event.key === "ArrowDown") && direction !== "up") {
+  if ((event.code === "KeyS" || event.code === "ArrowDown") && direction !== "up") {
     direction = "down";
   }
-  if ((event.key === "a" || event.key === "A" || event.key === "ArrowLeft") && direction !== "right") {
+  if ((event.code === "KeyA" || event.code === "ArrowLeft") && direction !== "right") {
     direction = "left";
   }
-  if ((event.key === "d" || event.key === "D" || event.key === "ArrowRight") && direction !== "left") {
+  if ((event.code === "KeyD" || event.code === "ArrowRight") && direction !== "left") {
     direction = "right";
   }
 });
